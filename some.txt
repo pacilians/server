@@ -1,0 +1,45 @@
+// app.post('/upload', upload.single('file'), async (req, res) => {
+//     try {
+//         const fileData = req.file;
+//         const fileName = fileData.originalname;
+
+//         // Insert file data into the database
+//         const [result] = await db.execute(
+//             'INSERT INTO files (file_name, file_data) VALUES (?, ?)',
+//             [fileName, fileData.buffer]
+//         );
+
+//         res.json({ message: 'File uploaded successfully.' });
+//     } catch (error) {
+//         console.error('Error uploading file:', error);
+//         res.status(500).json({ error: 'An error occurred while uploading the file.' });
+//     }
+// });
+  
+// app.get('/download/:fileId', async (req, res) => {
+//     try {
+//         const fileId = req.params.fileId;
+//         const [rows] = await db.execute(
+//             'SELECT file_name, file_data FROM files WHERE file_id = ?',
+//             [fileId]
+//         );
+
+//         if (rows.length === 0) {
+//             return res.status(404).json({ error: 'File not found' });
+//         }
+
+//         const file = rows[0];
+//         const fileName = file.file_name;
+//         const fileData = file.file_data;
+
+//         // Set the response headers
+//         res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+//         res.setHeader('Content-Type', 'application/octet-stream');
+
+//         // Send the file data as the response
+//         res.send(fileData);
+//     } catch (error) {
+//         console.error('Error retrieving file:', error);
+//         res.status(500).json({ error: 'An error occurred while retrieving the file.' });
+//     }
+// });
