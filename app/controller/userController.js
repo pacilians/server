@@ -15,12 +15,30 @@ const UserController = {
     response.send(res);
   },
 
-  async updateUser(req, res) {},
+  async updateUser(req, res) {
+    const id = req.params.id;
+    const user = plainToClass(UserDTO, req.body);
+    const updatedUser = await userService.updateUser(id, user);
+    const response = new JsonResponse(
+      200,
+      { user: updatedUser },
+      "Successfull updated user"
+    );
+    response.send(res);
+  },
 
   async getDetailUser(req, res) {
     const id = req.params.id;
-    const users = await userService.getUserById(id);
-    const response = new JsonResponse(200, { users: users }, "");
+    const user = await userService.getUserById(id);
+    const response = new JsonResponse(200, {}, "");
+
+    if (!user) {
+      response.message = "User not found";
+      response.status = 404;
+    } else {
+      response.data = { user };
+    }
+
     response.send(res);
   },
 
