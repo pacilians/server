@@ -1,14 +1,40 @@
+const { plainToClass } = require("class-transformer");
+const { UserDTO } = require("../../core/dto/user.dto");
+const JsonResponse = require("../../core/response");
+const { userService } = require("../service");
+
 const UserController = {
-  createUser(req, res) {
-    return res.send("Hello");
+  async createUser(req, res) {
+    const user = plainToClass(UserDTO, req.body);
+    const createdUser = await userService.createUser(user);
+    const response = new JsonResponse(
+      200,
+      { user: createdUser },
+      "Success creating user"
+    );
+    response.send(res);
   },
 
-  updateUser(req, res) {},
+  async updateUser(req, res) {},
 
-  getDetailUser(req, res) {},
+  async getDetailUser(req, res) {
+    const id = req.params.id;
+    const users = await userService.getUserById(id);
+    const response = new JsonResponse(200, { users: users }, "");
+    response.send(res);
+  },
 
-  getAllUser(req, res) {},
-  deleteUser(req, res) {},
+  async getAllUser(req, res) {
+    const users = await userService.getAllUser();
+    const response = new JsonResponse(200, { users: users }, "");
+    response.send(res);
+  },
+  async deleteUser(req, res) {
+    const id = req.params.id;
+    await userService.deleteUser(id);
+    const response = new JsonResponse(200, {}, "User has been deleted");
+    response.send(res);
+  },
 };
 
 module.exports = UserController;
