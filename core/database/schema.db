@@ -1,18 +1,22 @@
 CREATE TABLE `user` (
   `id` varchar(255) PRIMARY KEY,
-  `username` varchar(255),
+  `email` varchar(255),
+  `password` varchar(255),
   `name` varchar(255),
   `photo` longblob DEFAULT null,
-  `npp` varchar(255),
+  `npp` vachar,
   `role` varchar(255),
   `description` varchar(255),
   `is_notify` int DEFAULT 0
 );
+INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `description`, `is_notify`)
+VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'ADMIN', '001', 'admin', 'Admin user', 0);
+
 
 CREATE TABLE `customer` (
   `id` varchar(255) PRIMARY KEY,
   `name` varchar(255),
-  `address` varchar(255),
+  `address` varchar(255), 
   `telephone` int,
   `expiry_date` datetime,
   `business_category` varchar(255),
@@ -26,13 +30,13 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `bank_account` (
   `id` varchar(255) PRIMARY KEY,
-  `id_customer` varchar(255),
+  `id_customer` vachar,
   `number` int,
   `name` varchar(255) DEFAULT ""
 );
 
-CREATE TABLE `mandatory_check` (
-  `id_customer` varchar(255),
+CREATE TABLE `data_mandatory` (
+  `id_customer` vachar,
   `deed_of_establishment` datetime,
   `npwp` int,
   `nib` int,
@@ -46,7 +50,7 @@ CREATE TABLE `mandatory_check` (
 
 CREATE TABLE `log` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` varchar(255),
+  `id_customer` vachar,
   `id_file` int,
   `created_at` timestamp,
   `message` text
@@ -54,34 +58,34 @@ CREATE TABLE `log` (
 
 CREATE TABLE `file` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` varchar(255),
+  `id_customer` vachar,
   `name` varchar(255),
-  `type` varchar(255),
+  `type` vachar,
   `file` longblob DEFAULT null,
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null
 );
 
 CREATE TABLE `board_of_director` (
-  `id` varchar(255) PRIMARY KEY,
+  `id` varchar[pk],
   `name` varchar(255),
   `photo` longblob DEFAULT null,
-  `npp`  varchar(255),
-  `role`  varchar(255),
-  `description` text
+  `npp` vachar,
+  `role` vachar,
+  `description` vachar
 );
 
 CREATE TABLE `notification` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` varchar(255),
-  `id_bod` varchar(255),
+  `id_customer` vachar,
+  `id_bod` vachar,
   `created_at` timestamp,
   `message` text
 );
 
 CREATE TABLE `announcement` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_user` varchar(255),
+  `id_user` vachar,
   `title` text,
   `content` text,
   `created_at` timestamp,
