@@ -1,14 +1,11 @@
 const express = require('express');
-const { container } = require('../container')
 const router = express.Router();
+const userController = require('../app/controller/userController')
 
-// const userController = container.resolve('usr');
-console.log(container)
-
-router.get('/', (req, res)=>{
-    return res.send("Hello")
-});
-
-// router.get('/id', userController.getUser);
+router.post('/', userController.createUser);
+router.get('/', userController.getAllUser);
+router.post("/:id", userController.getDetailUser);
+router.put("/:id", userController.updateUser)
+router.delete("/:id", userController.deleteUser)
 
 module.exports = router;

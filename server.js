@@ -1,20 +1,16 @@
 const express = require('express');
-const { setup } = require('./container');
 const apiErrorHandler = require('./core/error/api-error-handler');
 const cors = require('cors')
 const router = require('./router');
 
-setup();
-
 class Server {
   constructor() {
     this.app = express();
-    this.setup();
+    this.starter();
   }
 
-  setup() {
+  starter() {
     this.app.use(express.json());
-    this.app.use('/',router)
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cors())
     this.app.use('/', router);
