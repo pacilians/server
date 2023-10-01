@@ -3,4 +3,5 @@ const masterDataService = require("./masterDataService")
 
 module.exports = {
     userService,
+    masterDataService
 }

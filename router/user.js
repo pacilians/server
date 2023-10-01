@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../app/controller/userController')
 
+const authJwt = require('../core/middleware/authjwt');
+
+router.use(authJwt);
 router.post('/', userController.createUser);
 router.get('/', userController.getAllUser);
 router.get("/:id", userController.getDetailUser);

@@ -42,13 +42,15 @@ const MasterDataRepository = {
      * Business Category
      */
     getAllBusiness: async () => {
-
+        const [rows] = await pool.query('SELECT * FROM category_business');
+        return rows;
     },
-    createBusiness: async () => {
-        
+    createBusiness: async (name) => {
+        const [result] = await pool.query('INSERT INTO category_business (name) VALUES (?)', [name]);
+        return result.insertId;
     },
-    deleteBusiness: async()=>{
-        
+    deleteBusiness: async(id)=>{
+        await pool.query('DELETE FROM category_business WHERE id = ?', [id]);
     }
 
 };

@@ -1,26 +1,35 @@
-const {userRepository} = require("../repository");
+const { masterDataRepository } = require("../repository");
 
 const MasterDataService = {
-  async createUser(user) {
-    return await userRepository.createUser(user);
+  async getAllBusiness() {
+    return await masterDataRepository.getAllBusiness();
   },
-  async getUserById(id) {
-    return await userRepository.getUserById(id);
+  async createBusiness(name) {
+    return await masterDataRepository.createBusiness(name);
   },
-  async updateUser(id, user) {
-    await userRepository.updateUser(id, user);
+  async deleteBusiness(id) {
+    return await masterDataRepository.deleteBusiness(id);
   },
-  async deleteUser(id) {
-    await userRepository.deleteUser(id);
+  async getAllService() {
+    return await masterDataRepository.getAllService();
   },
-  async getUserByEmail(email){
-    const user = await userRepository.getUserByEmail(email)
-    return user;
+  async createService(name) {
+    return await masterDataRepository.createService(name);
   },
-  async getAllUser(){
-    const users = await userRepository.getAllUsers()
-    return users;
-  }
+  async deleteService(id) {
+    return await masterDataRepository.deleteService(id);
+  },
+  async getAllMandatory() {
+    return await masterDataRepository.getAllMandatory();
+  },
+  async createMandatory(name) {
+    return await masterDataRepository.createMandatory(name);
+  },
+  async deleteMandatory(id) {
+    return await masterDataRepository.deleteMandatory(id);
+  },
 };
 
-module.exports = MasterDataService;
+module.exports = {
+  MasterDataService,
+};

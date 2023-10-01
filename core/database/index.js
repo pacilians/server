@@ -10,6 +10,9 @@ const config = {
   queueLimit: 0
 };
 
-const pool = mysql.createPool(config);
-
-module.exports = pool;
+try {
+  const pool = mysql.createPool(config);
+  module.exports = pool;
+} catch (error) {
+  console.error("Error creating database pool:", error);
+}
