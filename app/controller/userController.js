@@ -12,6 +12,11 @@ const UserController = {
       { user: createdUser },
       "Success creating user"
     );
+
+    if (!createdUser) {
+      response.message = "Failed creating user (double email)";
+      response.status = 500;
+    }
     response.send(res);
   },
 
@@ -39,6 +44,11 @@ const UserController = {
       response.data = { user };
     }
 
+    if (user === null) {
+      response.message = "Internal server error";
+      response.status = 500;
+    }
+
     response.send(res);
   },
 
@@ -56,3 +66,4 @@ const UserController = {
 };
 
 module.exports = UserController;
+

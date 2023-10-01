@@ -17,7 +17,7 @@ const MasterDataRepository = {
         return result.insertId;
     },
     deleteMandatory: async()=>{
-        await db.query('DELETE FROM category_mandatory WHERE id = ?', [id]);
+        return await db.query('DELETE FROM category_mandatory WHERE id = ?', [id]);
     },
 
 
@@ -34,7 +34,7 @@ const MasterDataRepository = {
         return result.insertId;
     },
     deleteService: async()=>{
-        await db.query('DELETE FROM category_mandatory WHERE id = ?', [id]);
+        return await db.query('DELETE FROM category_mandatory WHERE id = ?', [id]);
     },
 
 
@@ -50,7 +50,7 @@ const MasterDataRepository = {
         return result.insertId;
     },
     deleteBusiness: async(id)=>{
-        await pool.query('DELETE FROM category_business WHERE id = ?', [id]);
+        return await pool.query('DELETE FROM category_business WHERE id = ?', [id]);
     }
 
 };

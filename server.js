@@ -13,8 +13,8 @@ class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cors())
-    this.app.use('/', router);
     this.app.use(apiErrorHandler);
+    this.app.use('/', router);
   }
 
   run(port) {
