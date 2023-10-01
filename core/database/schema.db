@@ -1,22 +1,26 @@
-CREATE TABLE `user` (
-  `id` varchar(255) PRIMARY KEY,
-  `email` varchar(255),
-  `password` varchar(255),
-  `name` varchar(255),
-  `photo` longblob DEFAULT null,
-  `npp` vachar,
-  `role` varchar(255),
-  `description` varchar(255),
-  `is_notify` int DEFAULT 0
-);
+-- Some Initial
 INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `description`, `is_notify`)
 VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'ADMIN', '001', 'admin', 'Admin user', 0);
 
 
+-- Some DDL
+CREATE TABLE `user` (
+  `id` varchar(255) PRIMARY KEY,
+  `email` varchar(255) UNIQUE,
+  `password` varchar(255),
+  `name` varchar(255),
+  `photo` longblob DEFAULT null,
+  `npp` varchar(255),
+  `role` varchar(255),
+  `description` varchar(255),
+  `is_notify` int DEFAULT 0,
+  `id_customer` varchar(255) DEFAULT ""
+);
+
 CREATE TABLE `customer` (
   `id` varchar(255) PRIMARY KEY,
   `name` varchar(255),
-  `address` varchar(255), 
+  `address` varchar(255),
   `telephone` int,
   `expiry_date` datetime,
   `business_category` varchar(255),
@@ -30,78 +34,94 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `bank_account` (
   `id` varchar(255) PRIMARY KEY,
-  `id_customer` vachar,
+  `id_customer` varchar(255),
   `number` int,
   `name` varchar(255) DEFAULT ""
 );
 
-CREATE TABLE `data_mandatory` (
-  `id_customer` vachar,
-  `deed_of_establishment` datetime,
-  `npwp` int,
-  `nib` int,
-  `sk_menkumham` int,
-  `IDcard_keeper` int,
-  `agreement` int,
-  `kyc_form` int,
-  `bo_form` int,
-  `client_risk_form` int
+CREATE TABLE `category_mandatory` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255)
+);
+
+CREATE TABLE `category_service` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255)
+);
+
+CREATE TABLE `category_business` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255)
 );
 
 CREATE TABLE `log` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` vachar,
+  `id_customer` varchar(255),
   `id_file` int,
   `created_at` timestamp,
   `message` text
 );
 
-CREATE TABLE `file` (
+CREATE TABLE `customer_file` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` vachar,
+  `id_customer` varchar(255),
   `name` varchar(255),
-  `type` vachar,
+  `type` varchar(255),
   `file` longblob DEFAULT null,
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null
 );
 
 CREATE TABLE `board_of_director` (
-  `id` varchar[pk],
+  `id` varchar(255) PRIMARY KEY,
+  `id_customer` int,
   `name` varchar(255),
   `photo` longblob DEFAULT null,
-  `npp` vachar,
-  `role` vachar,
-  `description` vachar
+  `npp` varchar(255),
+  `role` varchar(255),
+  `description` varchar(255)
 );
 
 CREATE TABLE `notification` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` vachar,
-  `id_bod` vachar,
+  `id_customer` varchar(255),
+  `id_bod` varchar(255),
   `created_at` timestamp,
   `message` text
 );
 
 CREATE TABLE `announcement` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_user` vachar,
+  `id_user` varchar(255),
   `title` text,
   `content` text,
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null
 );
 
-ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+CREATE TABLE `audit_period` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255),
+  `start` datetime,
+  `end` datetime
+);
 
-ALTER TABLE `announcement` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+CREATE TABLE `audit_file` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id_audit_period` int,
+  `file` longblob DEFAULT null,
+  `name` varchar(255)
+);
 
-ALTER TABLE `board_of_director` ADD FOREIGN KEY (`id`) REFERENCES `customer` (`id`);
-
-ALTER TABLE `notification` ADD FOREIGN KEY (`id`) REFERENCES `customer` (`id`);
-
-ALTER TABLE `file` ADD FOREIGN KEY (`id`) REFERENCES `customer` (`id`);
-
-ALTER TABLE `bank_account` ADD FOREIGN KEY (`id`) REFERENCES `customer` (`id`);
-
-ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `file` (`id`);
+CREATE TABLE `securities_account` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id_customer` varchar(255),
+  `action` varchar(255),
+  `investor_type` varchar(255),
+  `investor_client_type` varchar(255),
+  `account_local_code` varchar(255),
+  `account_client_code` varchar(255),
+  `investor_company_name` varchar(255),
+  `investor_company_bic_code` varchar(255),
+  `account_tax_code` varchar(255)
+);
