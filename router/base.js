@@ -37,7 +37,6 @@ router.post("/login", async (req, res) => {
 
   const response = new JsonResponse(200, { token: token }, "Login Successful");
   response.send(res);
-  res.status(200).json({ auth: true, token: token });
 });
 
 module.exports = router;

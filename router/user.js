@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../app/controller/userController')
 
+const authJwt = require('../core/middleware/authjwt');
+
+router.use(authJwt);
 router.post('/', userController.createUser);
 router.get('/', userController.getAllUser);
-router.post("/:id", userController.getDetailUser);
+router.get("/:id", userController.getDetailUser);
 router.put("/:id", userController.updateUser)
 router.delete("/:id", userController.deleteUser)
 

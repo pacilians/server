@@ -2,7 +2,8 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "BNI CUSTODY SYSTEM";
 
 function verifyToken(req, res, next) {
-  const token = req.headers["token"];
+  const authHeader = req.headers["authorization"];
+  const token = authHeader
   if (!token) {
     return res.status(403).json({ auth: false, message: "No token provided." });
   }
@@ -13,8 +14,8 @@ function verifyToken(req, res, next) {
         .status(500)
         .json({ auth: false, message: "Failed to authenticate token." });
     }
-
-    req.userId = decoded.id;
+    console.log(decoded);
+    req.user = decoded
     next();
   });
 }

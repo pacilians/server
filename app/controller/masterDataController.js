@@ -1,9 +1,8 @@
 const { plainToClass } = require("class-transformer");
-const { UserDTO } = require("../../core/dto/user.dto");
 const JsonResponse = require("../../core/response");
-const { userService } = require("../service");
+const { masterDataService } = require("../service");
 
-const UserController = {
+const MasterDataController = {
   async createUser(req, res) {
     const user = plainToClass(UserDTO, req.body);
     const createdUser = await userService.createUser(user);

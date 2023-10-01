@@ -1,31 +1,57 @@
 const pool = require("../../core/database");
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs')
+const CryptoJS = require('crypto-js');
 
 const UserRepository = {
   async createUser(user) {
-    const [rows] = await pool.promise().query("INSERT INTO user SET ?", user);
-    return rows.insertId;
+    const id = uuidv4();
+    const { email, name, npp, role, description } = user;
+
+    const combinedString = email + name;
+    const secretPassphrase = role;
+    const password = CryptoJS.AES.encrypt(combinedString, secretPassphrase).toString();
+
+    await pool.query(
+      "INSERT INTO user (id, email, password, name, npp, role, description) VALUES (?, ?, ?, ?, ?, ?, ?);",
+      [id, email, password, name, npp, role, description]
+    );
+
+    const createdUser = {
+      id,
+      email,
+      name,
+      npp,
+      role,
+      description
+    };
+  
+    return createdUser;
   },
-  async getUserById(id) {
-    const [rows] = await pool
-      .promise()
-      .query("SELECT * FROM user WHERE id = ?", [id]);
+  async getUserById(userId) {
+    const [rows] = await pool.query("SELECT * FROM user WHERE id = ?", [
+      userId,
+    ]);
     return rows[0];
   },
   async updateUser(id, user) {
-    await pool.promise().query("UPDATE user SET ? WHERE id = ?", [user, id]);
+    const { email, password, name, npp, role, description } = user;
+    await pool.query(
+      "UPDATE user SET email=?, password=?, name=?,  npp=?, role=?, description=? WHERE id=?",
+      [email, password, name, npp, role, description, id]
+    );
   },
   async deleteUser(id) {
-    await pool.promise().query("DELETE FROM user WHERE id = ?", [id]);
+    await pool.query("DELETE FROM user WHERE id = ?", [id]);
   },
   async getAllUsers() {
-    const [rows] = await pool.query('SELECT * FROM user');
+    const [rows] = await pool.query("SELECT * FROM user");
     return rows;
   },
   async getUserByEmail(email) {
-    const [rows] = await pool
-      .query("SELECT * FROM user WHERE email = ?", [email]);
-    console.log(rows);
-    console.log(rows[0]);
+    const [rows] = await pool.query("SELECT * FROM user WHERE email = ?", [
+      email,
+    ]);
     return rows[0];
   },
 };

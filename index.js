@@ -2,4 +2,4 @@ const Server = require('./server');
 // const config = require('./config');
 
 const server = new Server();
-server.run(8000);
+server.run(process.env.PORT || 8000);
