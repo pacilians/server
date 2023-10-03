@@ -3,55 +3,107 @@ const JsonResponse = require("../../core/response");
 const { masterDataService } = require("../service");
 
 const MasterDataController = {
-  async createUser(req, res) {
-    const user = plainToClass(UserDTO, req.body);
-    const createdUser = await userService.createUser(user);
-    const response = new JsonResponse(
-      200,
-      { user: createdUser },
-      "Success creating user"
-    );
-    response.send(res);
-  },
+  async getAllBusiness(req, res) {
+    const business = await masterDataService.getAllBusiness();
+    const response = new JsonResponse(200, { business: business }, "");
 
-  async updateUser(req, res) {
-    const id = req.params.id;
-    const user = plainToClass(UserDTO, req.body);
-    const updatedUser = await userService.updateUser(id, user);
-    const response = new JsonResponse(
-      200,
-      { user: updatedUser },
-      "Successfull updated user"
-    );
-    response.send(res);
-  },
-
-  async getDetailUser(req, res) {
-    const id = req.params.id;
-    const user = await userService.getUserById(id);
-    const response = new JsonResponse(200, {}, "");
-
-    if (!user) {
-      response.message = "User not found";
-      response.status = 404;
-    } else {
-      response.data = { user };
+    if (!business) {
+      response.message = "Failed fetching business category";
+      response.status = 500;
     }
-
     response.send(res);
   },
 
-  async getAllUser(req, res) {
-    const users = await userService.getAllUser();
-    const response = new JsonResponse(200, { users: users }, "");
+  async createBusiness(req, res) {
+    const { name } = req.body;
+    const createdBusiness = await masterDataService.createBusiness(name);
+    const response = new JsonResponse(
+      200,
+      { user: createdBusiness },
+      "Success creating business"
+    );
+
+    if (!createdBusiness) {
+      response.message = "Failed creating business category";
+      response.status = 500;
+    }
     response.send(res);
   },
-  async deleteUser(req, res) {
+
+  async deleteBusiness(req, res) {
     const id = req.params.id;
-    await userService.deleteUser(id);
-    const response = new JsonResponse(200, {}, "User has been deleted");
+    await masterDataService.deleteBusiness(id)
+    const response = new JsonResponse(200, {}, "Business category has been deleted");
+    response.send(res);
+  },
+
+  async getAllService(req, res) {
+    const service = await masterDataService.getAllService();
+    const response = new JsonResponse(200, { service: service }, "");
+
+    if (!service) {
+      response.message = "Failed fetching service category";
+      response.status = 500;
+    }
+    response.send(res);
+  },
+
+  async createService(req, res) {
+    const { name } = req.body;
+    const createdService = await masterDataService.createService(name);
+    const response = new JsonResponse(
+      200,
+      { user: createdService },
+      "Success creating service"
+    );
+
+    if (!createdService) {
+      response.message = "Failed creating service category";
+      response.status = 500;
+    }
+    response.send(res);
+  },
+
+  async deleteService(req, res) {
+    const id = req.params.id;
+    await masterDataService.deleteService(id)
+    const response = new JsonResponse(200, {}, "Service category has been deleted");
+    response.send(res);
+  },
+
+  async getAllMandatory(req, res) {
+    const mandatory = await masterDataService.getAllMandatory();
+    const response = new JsonResponse(200, { mandatory: mandatory }, "");
+
+    if (!mandatory) {
+      response.message = "Failed fetching mandatory category";
+      response.status = 500;
+    }
+    response.send(res);
+  },
+
+  async createMandatory(req, res) {
+    const { name } = req.body;
+    const createdMandatory = await masterDataService.createMandatory(name);
+    const response = new JsonResponse(
+      200,
+      { user: createdMandatory },
+      "Success creating mandatory"
+    );
+
+    if (!createdMandatory) {
+      response.message = "Failed creating mandatory category";
+      response.status = 500;
+    }
+    response.send(res);
+  },
+
+  async deleteMandatory(req, res) {
+    const id = req.params.id;
+    await masterDataService.deleteMandatory(id)
+    const response = new JsonResponse(200, {}, "Mandatory category has been deleted");
     response.send(res);
   },
 };
 
-module.exports = UserController;
+module.exports = MasterDataController;

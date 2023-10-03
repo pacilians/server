@@ -30,6 +30,4 @@ const MasterDataService = {
   },
 };
 
-module.exports = {
-  MasterDataService,
-};
+module.exports = MasterDataService
