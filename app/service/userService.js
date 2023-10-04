@@ -8,10 +8,10 @@ const UserService = {
     return await userRepository.getUserById(id);
   },
   async updateUser(id, user) {
-    await userRepository.updateUser(id, user);
+    return await userRepository.updateUser(id, user);
   },
   async deleteUser(id) {
-    await userRepository.deleteUser(id);
+    return await userRepository.deleteUser(id);
   },
   async getUserByEmail(email){
     const user = await userRepository.getUserByEmail(email)
