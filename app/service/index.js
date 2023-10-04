@@ -1,7 +1,9 @@
-const userService = require("./userService")
-const masterDataService = require("./masterDataService")
+const userService = require("./user.service")
+const masterDataService = require("./master-data.service")
+const announcementService = require("./announcement.service")
 
 module.exports = {
     userService,
-    masterDataService
+    masterDataService,
+    announcementService
 }

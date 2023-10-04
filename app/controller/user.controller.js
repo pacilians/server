@@ -1,5 +1,5 @@
 const { plainToClass } = require("class-transformer");
-const { UserDTO } = require("../../core/dto/user.dto");
+const { UserDTO } = require("../../core/model/user.model");
 const JsonResponse = require("../../core/response");
 const { userService } = require("../service");
 

@@ -1,7 +1,9 @@
-const userRepository = require("./userRepository")
-const masterDataRepository = require("./masterDataRepository")
+const userRepository = require("./user.repository")
+const masterDataRepository = require("./master-data.repository")
+const announcementRepository = require("./announcement.repository")
 
 module.exports = {
     userRepository,
-    masterDataRepository
+    masterDataRepository,
+    announcementRepository
 }

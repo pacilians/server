@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const UserService = require("../app/service/userService");
+const UserService = require("../app/service/user.service");
 const SECRET_KEY = "BNI CUSTODY SYSTEM";
 const JsonResponse = require("../core/response");
 const express = require("express");
