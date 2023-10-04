@@ -4,6 +4,7 @@ const router = express.Router();
 const baseRouter = require("./base");
 const userRouter = require("./user");
 const masterDataRouter = require("./master-data")
+const announcementRouter = require("./announcement")
 
 router.use((err, req, res, next) => {
   console.error(err.stack);
@@ -13,5 +14,6 @@ router.use((err, req, res, next) => {
 router.use("/", baseRouter);
 router.use("/user", userRouter);
 router.use("/master-data", masterDataRouter)
+router.use("/announcement", announcementRouter)
 
 module.exports = router;

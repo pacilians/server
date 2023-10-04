@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const masterDataController = require('../app/controller/masterDataController')
+const masterDataController = require('../app/controller/master-data.controller')
 
 const authJwt = require('../core/middleware/authjwt');
 
