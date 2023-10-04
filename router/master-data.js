@@ -5,6 +5,9 @@ const masterDataController = require('../app/controller/masterDataController')
 const authJwt = require('../core/middleware/authjwt');
 
 // router.use(authJwt);
+
+router.get('/', masterDataController.getAllData)
+
 router.post('/business', masterDataController.createBusiness);
 router.get('/business', masterDataController.getAllBusiness);
 router.delete("/business/:id", masterDataController.deleteBusiness);

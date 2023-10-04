@@ -13,13 +13,13 @@ const config = {
 
 const database = {
   async query(query, args) {
-    let res = null;
+    let res = 1;
     try {
       const pool = mysql.createPool(config);
       res = await pool.query(query, args);
-      console.log(res);
     } catch (error) {
       console.error(error);
+      return null;
     }
     return res;
   },

@@ -104,6 +104,13 @@ const MasterDataController = {
     const response = new JsonResponse(200, {}, "Mandatory category has been deleted");
     response.send(res);
   },
+
+
+  async getAllData(req, res) {
+    const all = await masterDataService.getAllData()
+    const response = new JsonResponse(200, {data: all}, "");
+    response.send(res);
+  },
 };
 
 module.exports = MasterDataController;

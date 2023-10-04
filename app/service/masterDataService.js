@@ -28,6 +28,18 @@ const MasterDataService = {
   async deleteMandatory(id) {
     return await masterDataRepository.deleteMandatory(id);
   },
+
+  async getAllData(){
+    const business = await this.getAllBusiness()
+    const service = await this.getAllService()
+    const mandatory = await this.getAllMandatory()
+
+    return {
+      business,
+      service,
+      mandatory
+    }
+  }
 };
 
 module.exports = MasterDataService
