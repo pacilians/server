@@ -1,9 +1,11 @@
 const userService = require("./user.service")
 const masterDataService = require("./master-data.service")
 const announcementService = require("./announcement.service")
+const databaseService = require("./database.service")
 
 module.exports = {
     userService,
     masterDataService,
-    announcementService
+    announcementService,
+    databaseService
 }
