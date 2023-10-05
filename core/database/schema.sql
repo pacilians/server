@@ -1,9 +1,8 @@
--- Some Initial
 INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `description`, `is_notify`)
 VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'ADMIN', '001', 'admin', 'Admin user', 0);
 
+-- 
 
--- Some DDL
 CREATE TABLE `user` (
   `id` varchar(255) PRIMARY KEY,
   `email` varchar(255) UNIQUE,
@@ -14,7 +13,7 @@ CREATE TABLE `user` (
   `role` varchar(255),
   `description` varchar(255),
   `is_notify` int DEFAULT 0,
-  `id_customer` varchar(255) DEFAULT ""
+  `id_customer` int DEFAULT ""
 );
 
 CREATE TABLE `customer` (
@@ -29,7 +28,8 @@ CREATE TABLE `customer` (
   `key_person_dob` datetime,
   `key_person_hp` int,
   `created_at` timestamp,
-  `updated_at` timestamp DEFAULT null
+  `updated_at` timestamp DEFAULT null,
+  `status` int DEFAULT 0
 );
 
 CREATE TABLE `bank_account` (
@@ -95,6 +95,7 @@ CREATE TABLE `announcement` (
   `id_user` varchar(255),
   `title` text,
   `content` text,
+  `is_pinned` int DEFAULT 0,
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null
 );
@@ -125,3 +126,21 @@ CREATE TABLE `securities_account` (
   `investor_company_bic_code` varchar(255),
   `account_tax_code` varchar(255)
 );
+
+ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `announcement` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `board_of_director` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);
+
+ALTER TABLE `notification` ADD FOREIGN KEY (`id`) REFERENCES `customer` (`id`);
+
+ALTER TABLE `customer_file` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);
+
+ALTER TABLE `bank_account` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);
+
+ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `customer_file` (`id`);
+
+ALTER TABLE `audit_file` ADD FOREIGN KEY (`id_audit_period`) REFERENCES `audit_period` (`id`);
+
+ALTER TABLE `securities_account` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);

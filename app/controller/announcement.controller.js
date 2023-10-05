@@ -68,6 +68,16 @@ const AnnouncementController = {
     const response = new JsonResponse(200, {}, "Announcement has been deleted");
     response.send(res);
   },
+  async updateAnnouncementPin(req, res) {
+    const id = req.params.id;
+    const updatedAnnouncement = await announcementService.pinAnnouncement(id)
+    const response = new JsonResponse(
+      200,
+      { announcement: updatedAnnouncement },
+      "Successfully updated announcement pin"
+    );
+    response.send(res);
+  },
 };
 
 module.exports = AnnouncementController;

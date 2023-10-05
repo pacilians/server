@@ -28,4 +28,9 @@ module.exports = {
         const [result] = await db.query('DELETE FROM announcement WHERE id = ?', [id]) || [];
         return result
     },
+    pinAnnouncement: async (id, status) => {
+        const updated_at = new Date();
+        const [result] = await db.query('UPDATE announcement SET is_pinned = ?, updated_at = ? WHERE id = ?', [status, updated_at, id]);
+        return result.affectedRows > 0;
+    },
 };
