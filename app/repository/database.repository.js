@@ -59,30 +59,22 @@ const DatabaseRepository = {
     return rows[0];
   },
   async updateCustomer(id, customer) {
-    const {
-      name,
-      address,
-      telephone,
-      expiry_date,
-      business_category,
-      service,
-      key_person_name,
-      key_person_dob,
-      key_person_hp,
-    } = customer;
+    const updated_at = new Date();
+
     return await db.query(
-      "UPDATE customer SET name=?, address=?, telephone=?, expiry_date=?, business_category=?, service=?, key_person_name=?, key_person_dob=?, key_person_hp=? WHERE id=?",
+      "UPDATE customer SET name=?, address=?, telephone=?, expiry_date=?, business_category=?, service=?, key_person_name=?, key_person_dob=?, key_person_hp=?, updated_at=? WHERE id=?",
       [
-        name,
-        address,
-        telephone,
-        expiry_date,
-        business_category,
-        service,
-        key_person_name,
-        key_person_dob,
-        key_person_hp,
-        id,
+        customer.name,
+        customer.address,
+        customer.telephone,
+        customer.expiry_date,
+        customer.business_category,
+        customer.service,
+        customer.key_person_name,
+        customer.key_person_dob,
+        customer.key_person_hp,
+        updated_at,
+        customer.id,
       ]
     );
   },
@@ -94,10 +86,10 @@ const DatabaseRepository = {
     return rows;
   },
   async updateCustomerStatus(id, status) {
-    return await db.query(
-      "UPDATE customer SET status=? WHERE id=?",
-      [status, id]
-    );
+    return await db.query("UPDATE customer SET status=? WHERE id=?", [
+      status,
+      id,
+    ]);
   },
 
   /**
@@ -126,14 +118,18 @@ const DatabaseRepository = {
     await db.query("DELETE FROM bank_account WHERE id = ?", [id]);
   },
   async deleteBankAccountByCustomerId(id_customer) {
-    await db.query("DELETE FROM bank_account WHERE id_customer = ?", [id_customer]);
+    await db.query("DELETE FROM bank_account WHERE id_customer = ?", [
+      id_customer,
+    ]);
   },
   async updateBankAccount(id, bankAccount) {
     const { number, name } = bankAccount;
-    return await db.query(
+    const [row] = await db.query(
       "UPDATE bank_account SET number=?, name=? WHERE id=?",
       [number, name, id]
     );
+
+    return row;
   },
   async getBankAccountByCustomerId(id_customer) {
     const [rows] = await db.query(
@@ -194,7 +190,9 @@ const DatabaseRepository = {
     await db.query("DELETE FROM board_of_director WHERE id = ?", [id]);
   },
   async deleteBoardOfDirectorByCustomerId(id_customer) {
-    await db.query("DELETE FROM board_of_director WHERE id_customer = ?", [id_customer]);
+    await db.query("DELETE FROM board_of_director WHERE id_customer = ?", [
+      id_customer,
+    ]);
   },
   async getBoardOfDirectorByCustomerId(id_customer) {
     const [rows] = await db.query(

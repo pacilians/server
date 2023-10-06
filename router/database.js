@@ -9,6 +9,8 @@ router.post('/', databaseController.createCustomer);
 router.get('/', databaseController.getAllCustomers);
 router.get("/:id", databaseController.getDetailCustomer);
 router.put("/:id", databaseController.updateCustomer)
+router.put("/dob/:id", databaseController.updateBoardOfDirector)
+router.put("/rekening/:id", databaseController.updateBankAccount)
 router.delete("/:id", databaseController.deleteCustomer)
 
 module.exports = router;

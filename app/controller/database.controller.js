@@ -53,6 +53,7 @@ const DatabaseController = {
     response.send(res);
   },
 
+
   async createBankAccount(req, res) {
     const bankAccount = req.body;
     const createdBankAccount = await databaseService.createBankAccount(
@@ -72,6 +73,14 @@ const DatabaseController = {
     const response = new JsonResponse(200, {}, "Bank account has been deleted");
     response.send(res);
   },
+  async updateBankAccount(req, res) {
+    const id = req.params.id;
+    const bankacc = req.body;
+    const newACC = await databaseService.updateBankAccount(id, bankacc);
+    const response = new JsonResponse(200, {bank_account : newACC}, "Bank Account has been updated");
+    response.send(res);
+  },
+
 
   async createBoardOfDirector(req, res) {
     const boardOfDirector = req.body;
@@ -94,6 +103,14 @@ const DatabaseController = {
       {},
       "Board of director has been deleted"
     );
+    response.send(res);
+  },
+
+  async updateBoardOfDirector(req, res) {
+    const id = req.params.id;
+    const bod = req.body;
+    const newBOD = await databaseService.updateBoardOfDirector(id, bod);
+    const response = new JsonResponse(200, {bod: newBOD}, "BoardOfDirector has been updated");
     response.send(res);
   },
 };

@@ -56,6 +56,7 @@ const DatabaseService = {
     let updatedCustomer = new Customer();
     updatedCustomer.spread(cst);
 
+
     if (customer.name) {
       updatedCustomer.name = customer.name;
     }
@@ -69,7 +70,7 @@ const DatabaseService = {
       updatedCustomer.email = customer.email;
     }
 
-    await databaseRepository.updateCustomer(updatedCustomer);
+    await databaseRepository.updateCustomer(id, updatedCustomer);
 
     return updatedCustomer;
   },
@@ -137,6 +138,10 @@ const DatabaseService = {
   async deleteBankAccount(id) {
     return await databaseRepository.deleteBankAccount(id);
   },
+  async updateBankAccount(id, bankAccount) {
+    const updatedBankAccount = await databaseRepository.updateBankAccount(id, bankAccount);
+    return updatedBankAccount;
+  },
 
   /**
    *
@@ -149,6 +154,10 @@ const DatabaseService = {
 
   async deleteBoardOfDirector(id) {
     return await databaseRepository.deleteBoardOfDirector(id);
+  },
+  async updateBoardOfDirector(id, boardOfDirector) {
+    const updatedBOD =  await databaseRepository.updateBoardOfDirector(id, boardOfDirector);
+    return updatedBOD;
   },
 
   /**
