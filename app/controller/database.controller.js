@@ -1,14 +1,17 @@
 const { databaseService } = require("../service");
 const { plainToClass } = require("class-transformer");
 const JsonResponse = require("../../core/response");
+const { Customer } = require("../../core/model")
 
 const DatabaseController = {
   async createCustomer(req, res) {
-    const customer = req.body;
-    const createdCustomer = await DatabaseService.createCustomer(customer);
+
+    const customer = plainToClass(Customer, req.body);
+    const createdCustomer = await databaseService.createCustomer(customer);
+
     const response = new JsonResponse(
       201,
-      { customer: createdCustomer },
+      { customer: customer },
       "Customer has been created"
     );
     response.send(res);
@@ -16,7 +19,7 @@ const DatabaseController = {
 
   async getDetailCustomer(req, res) {
     const customerId = req.params.id;
-    const customer = await DatabaseService.getCustomerById(customerId);
+    const customer = await databaseService.getCustomerById(customerId);
     const response = new JsonResponse(
       200,
       { customer },
@@ -28,20 +31,20 @@ const DatabaseController = {
   async updateCustomer(req, res) {
     const id = req.params.id;
     const customer = req.body;
-    await DatabaseService.updateCustomer(id, customer);
+    await databaseService.updateCustomer(id, customer);
     const response = new JsonResponse(200, {}, "Customer has been updated");
     response.send(res);
   },
 
   async deleteCustomer(req, res) {
     const id = req.params.id;
-    await DatabaseService.deleteCustomer(id);
+    await databaseService.deleteCustomer(id);
     const response = new JsonResponse(200, {}, "Customer has been deleted");
     response.send(res);
   },
 
   async getAllCustomers(req, res) {
-    const customers = await DatabaseService.getAllCustomers();
+    const customers = await databaseService.getAllCustomers();
     const response = new JsonResponse(
       200,
       { customers },
@@ -52,7 +55,7 @@ const DatabaseController = {
 
   async createBankAccount(req, res) {
     const bankAccount = req.body;
-    const createdBankAccount = await DatabaseService.createBankAccount(
+    const createdBankAccount = await databaseService.createBankAccount(
       bankAccount
     );
     const response = new JsonResponse(
@@ -65,14 +68,14 @@ const DatabaseController = {
 
   async deleteBankAccount(req, res) {
     const id = req.params.id;
-    await DatabaseService.deleteBankAccount(id);
+    await databaseService.deleteBankAccount(id);
     const response = new JsonResponse(200, {}, "Bank account has been deleted");
     response.send(res);
   },
 
   async createBoardOfDirector(req, res) {
     const boardOfDirector = req.body;
-    const createdBoardOfDirector = await DatabaseService.createBoardOfDirector(
+    const createdBoardOfDirector = await databaseService.createBoardOfDirector(
       boardOfDirector
     );
     const response = new JsonResponse(
@@ -85,7 +88,7 @@ const DatabaseController = {
 
   async deleteBoardOfDirector(req, res) {
     const id = req.params.id;
-    await DatabaseService.deleteBoardOfDirector(id);
+    await databaseService.deleteBoardOfDirector(id);
     const response = new JsonResponse(
       200,
       {},
