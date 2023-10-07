@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
     }
   );
 
-  const response = new JsonResponse(200, { token: token }, "Login Successful");
+  const response = new JsonResponse(200, { token: token, user: user }, "Login Successful");
   response.send(res);
 });
 
