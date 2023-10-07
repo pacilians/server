@@ -77,22 +77,10 @@ const DatabaseService = {
 
   async deleteCustomer(id) {
     let customer = await databaseRepository.getCustomerById(id);
+    await databaseRepository.deleteBankAccountByCustomerId(customer.id)
+    await databaseRepository.deleteBoardOfDirectorByCustomerId(customer.id)
     await databaseRepository.deleteCustomer(id);
-    let banks = await databaseRepository.getBankAccountByCustomerId(
-      customer.id
-    );
-    for (let i = 0; i < banks.length; i++) {
-      let bank = banks[i];
-      await databaseRepository.deleteBankAccount(bank.id);
-    }
-    let bods = await databaseRepository.getBoardOfDirectorByCustomerId(
-      customer.id
-    );
-    for (let i = 0; i < bods.length; i++) {
-      let bod = bods[i];
-      await databaseRepository.deleteBoardOfDirector(bod.id);
-    }
-    return;
+    return customer;
   },
 
   async getAllCustomers() {

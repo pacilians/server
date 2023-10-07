@@ -129,7 +129,9 @@ const DatabaseRepository = {
       [number, name, id]
     );
 
-    return row;
+    if (row) return bankAccount;
+
+    return null;
   },
   async getBankAccountByCustomerId(id_customer) {
     const [rows] = await db.query(

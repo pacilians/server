@@ -13,7 +13,7 @@ CREATE TABLE `user` (
   `role` varchar(255),
   `description` varchar(255),
   `is_notify` int DEFAULT 0,
-  `id_customer` int DEFAULT ""
+  `id_customer` varchar(255) DEFAULT ""
 );
 
 CREATE TABLE `customer` (
@@ -74,7 +74,7 @@ CREATE TABLE `customer_file` (
 
 CREATE TABLE `board_of_director` (
   `id` varchar(255) PRIMARY KEY,
-  `id_customer` varchar(255),
+  `id_customer` int,
   `name` varchar(255),
   `photo` longblob DEFAULT null,
   `npp` varchar(255),

@@ -78,6 +78,10 @@ const DatabaseController = {
     const bankacc = req.body;
     const newACC = await databaseService.updateBankAccount(id, bankacc);
     const response = new JsonResponse(200, {bank_account : newACC}, "Bank Account has been updated");
+
+    if(!newACC)
+      response = new JsonResponse(500, {bank_account : null}, "Bank Account failed to update");
+
     response.send(res);
   },
 
