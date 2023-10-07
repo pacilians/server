@@ -39,4 +39,13 @@ router.post("/login", async (req, res) => {
   response.send(res);
 });
 
+router.get("/seed", (req,res) => {
+  
+  return res.send("Seeding The Database")
+})
+
+router.get("/reset", (req, res) => {
+  return res.send("Resetting The Database")
+})
+
 module.exports = router;

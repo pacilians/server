@@ -2,9 +2,9 @@ const { response } = require("express");
 const mysql = require("mysql2/promise");
 
 const config = {
-  host: "85.31.224.224",
+  host: "156.67.216.68",
   user: "root",
-  password: "pass",
+  password: "propensi2023",
   database: "master",
   waitForConnections: true,
   connectionLimit: 10,
@@ -18,7 +18,7 @@ const database = {
       const pool = mysql.createPool(config);
       res = await pool.query(query, args);
     } catch (error) {
-      console.error(error);
+      console.error(errowr);
       return null;
     }
     return res;

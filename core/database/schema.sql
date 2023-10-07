@@ -13,20 +13,20 @@ CREATE TABLE `user` (
   `role` varchar(255),
   `description` varchar(255),
   `is_notify` int DEFAULT 0,
-  `id_customer` int DEFAULT ""
+  `id_customer` varchar(255) DEFAULT ""
 );
 
 CREATE TABLE `customer` (
   `id` varchar(255) PRIMARY KEY,
   `name` varchar(255),
   `address` varchar(255),
-  `telephone` int,
+  `telephone` varchar(255),
   `expiry_date` datetime,
   `business_category` varchar(255),
   `service` varchar(255),
   `key_person_name` varchar(255),
   `key_person_dob` datetime,
-  `key_person_hp` int,
+  `key_person_hp` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null,
   `status` int DEFAULT 0
@@ -35,7 +35,7 @@ CREATE TABLE `customer` (
 CREATE TABLE `bank_account` (
   `id` varchar(255) PRIMARY KEY,
   `id_customer` varchar(255),
-  `number` int,
+  `number` varchar(255),
   `name` varchar(255) DEFAULT ""
 );
 
