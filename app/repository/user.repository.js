@@ -8,7 +8,7 @@ const UserRepository = {
     const id = uuidv4();
     const { email, name, npp, role, description } = user;
 
-    const combinedString = email + name;
+    const combinedString = email +" "+ name;
     const secretPassphrase = role;
     const password = CryptoJS.AES.encrypt(combinedString, secretPassphrase).toString();
 
