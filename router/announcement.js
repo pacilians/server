@@ -9,6 +9,7 @@ router.post('/', announcementController.createAnnouncement);
 router.get('/', announcementController.getAllAnnouncements);
 router.get("/:id", announcementController.getAnnouncementById);
 router.put("/:id", announcementController.updateAnnouncement)
+router.put("/pin/:id", announcementController.pinAnnouncement)
 router.post("/:id/pin", announcementController.updateAnnouncementPin)
 router.delete("/:id", announcementController.deleteAnnouncement)
 

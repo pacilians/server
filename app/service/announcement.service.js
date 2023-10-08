@@ -17,7 +17,7 @@ const AnnouncementService = {
   async getAnnouncementById(id) {
     let announcement = await announcementRepository.getAnnouncementById(id);
 
-    if (!announcement) return None;
+    if (!announcement) return null;
 
     const user = await userService.getUserById(announcement.id_user);
     announcement.user = user.name;
@@ -32,8 +32,7 @@ const AnnouncementService = {
   async pinAnnouncement(id) {
     const announcement = await this.getAnnouncementById(id);
     let pin = 1;
-
-    if (announcement.is_pin == 1) pin = 0;
+    if (announcement.is_pinned === 1) pin = 0;
     return await announcementRepository.pinAnnouncement(id, pin)
   },
 };

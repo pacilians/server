@@ -78,6 +78,12 @@ const AnnouncementController = {
     );
     response.send(res);
   },
+  async pinAnnouncement(req, res) {
+    const id = req.params.id;
+    await announcementService.pinAnnouncement(id);
+    const response = new JsonResponse(200, {}, "Announcement pin has been changed");
+    response.send(res);
+  },
 };
 
 module.exports = AnnouncementController;
