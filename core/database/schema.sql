@@ -1,5 +1,5 @@
 INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `description`, `is_notify`)
-VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'ADMIN', '001', 'admin', 'Admin user', 0);
+VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'Admin System', '001', 'ADMIN', 'Admin user', 0);
 
 -- 
 

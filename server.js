@@ -13,6 +13,7 @@ class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cors())
+    this.app.options('*', cors());
     this.app.use(apiErrorHandler);
     this.app.use('/', router);
   }
