@@ -59,7 +59,17 @@ const AnnouncementController = {
 
   async getAllAnnouncements(req, res) {
     const announcements = await announcementService.getAllAnnouncements();
-    const response = new JsonResponse(200, { announcements: announcements }, "");
+
+    const pinned = res.pinned = announcements.filter((ctx)=> ctx.is_pinned == 1)
+    const unpinned = res.unpinned = announcements.filter((ctx)=> ctx.is_pinned == 0)
+    
+    let resp = {
+      pinned: pinned,
+      unpinned: unpinned,
+      announcements: announcements
+    }
+
+    const response = new JsonResponse(200, { announcements: resp }, "");
     response.send(res);
   },
   async deleteAnnouncement(req, res) {
