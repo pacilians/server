@@ -207,6 +207,67 @@ const DatabaseRepository = {
   /**
    * File
    */
+
+  async createCustomerFile(customerFile) {
+    const { id_customer, name, type, file, created_at, updated_at } =
+      customerFile;
+
+    const result = await db.query(
+      "INSERT INTO customer_file (id_customer, name, type, file, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?);",
+      [id_customer, name, type, file, created_at, updated_at]
+    );
+
+    if (!result) return null;
+
+    return {
+      id: result.insertId,
+      id_customer,
+      name,
+      type,
+      file,
+      created_at,
+      updated_at,
+    };
+  },
+
+  async getCustomerFileById(fileId) {
+    const [rows] = await db.query("SELECT * FROM customer_file WHERE id = ?", [
+      fileId,
+    ]);
+
+    console.log(rows, fileId);
+    return rows[0];
+  },
+
+  async getCustomerFileByCustomerId(customer_id) {
+    const [rows] = await db.query(
+      "SELECT * FROM customer_file WHERE id_customer = ?",
+      [customer_id]
+    );
+    return rows;
+  },
+
+  async updateCustomerFile(id, updatedFile) {
+    const { file, updated_at } = updatedFile;
+
+    const [row] = await db.query(
+      "UPDATE customer_file SET file=? WHERE id=?",
+      [file, id]
+    );
+
+    if (row) return updatedFile;
+
+    return null;
+  },
+
+  async deleteCustomerFile(fileId) {
+    await db.query("DELETE FROM customer_file WHERE id = ?", [fileId]);
+  },
+
+  async getAllCustomerFiles() {
+    const [rows] = await db.query("SELECT * FROM customer_file");
+    return rows;
+  },
 };
 
 module.exports = DatabaseRepository;

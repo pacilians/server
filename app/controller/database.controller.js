@@ -1,11 +1,14 @@
 const { databaseService } = require("../service");
 const { plainToClass } = require("class-transformer");
 const JsonResponse = require("../../core/response");
-const { Customer } = require("../../core/model")
+const { Customer } = require("../../core/model");
 
 const DatabaseController = {
-  async createCustomer(req, res) {
+  /**
+   * Customer
+   */
 
+  async createCustomer(req, res) {
     const customer = plainToClass(Customer, req.body);
     const createdCustomer = await databaseService.createCustomer(customer);
 
@@ -53,6 +56,9 @@ const DatabaseController = {
     response.send(res);
   },
 
+  /**
+   * Bank Account
+   */
 
   async createBankAccount(req, res) {
     const bankAccount = req.body;
@@ -77,14 +83,25 @@ const DatabaseController = {
     const id = req.params.id;
     const bankacc = req.body;
     const newACC = await databaseService.updateBankAccount(id, bankacc);
-    const response = new JsonResponse(200, {bank_account : newACC}, "Bank Account has been updated");
+    const response = new JsonResponse(
+      200,
+      { bank_account: newACC },
+      "Bank Account has been updated"
+    );
 
-    if(!newACC)
-      response = new JsonResponse(500, {bank_account : null}, "Bank Account failed to update");
+    if (!newACC)
+      response = new JsonResponse(
+        500,
+        { bank_account: null },
+        "Bank Account failed to update"
+      );
 
     response.send(res);
   },
 
+  /**
+   * BOD
+   */
 
   async createBoardOfDirector(req, res) {
     const boardOfDirector = req.body;
@@ -114,7 +131,113 @@ const DatabaseController = {
     const id = req.params.id;
     const bod = req.body;
     const newBOD = await databaseService.updateBoardOfDirector(id, bod);
-    const response = new JsonResponse(200, {bod: newBOD}, "BoardOfDirector has been updated");
+    const response = new JsonResponse(
+      200,
+      { bod: newBOD },
+      "BoardOfDirector has been updated"
+    );
+    response.send(res);
+  },
+
+  /**
+   * Customer Files
+   */
+
+  async createCustomerFile(req, res) {
+    let resp = new JsonResponse(200, null, "");
+    try {
+      const file_data = req.file;
+      const file_name = req.body.name;
+      const customer_id = req.params.customerId;
+      const type = req.body.type;
+
+      const customerFileData = {
+        id_customer: customer_id,
+        name: file_name,
+        type: type,
+        file: file_data.buffer,
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
+
+      const createdCustomerFile = await databaseService.createCustomerFile(
+        customerFileData
+      );
+
+      if (createdCustomerFile) {
+        resp.status = 201;
+        resp.message = "File has been created";
+        resp.data = createdCustomerFile;
+        resp.send(res);
+      } else {
+        resp.status = 500;
+        resp.message = "Error while uploading the file";
+        resp.data = null;
+        resp.send(res);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      resp.status = 500;
+      resp.message = "Error while uploading the file";
+      resp.send(res);
+    }
+  },
+
+  async updateCustomerFile(req, res) {
+    let resp = new JsonResponse(200, null, "");
+    try {
+      const file_data = req.file;
+      const file_id = req.params.fileId;
+
+      const customerFileData = {
+        file: file_data.buffer,
+        updated_at: new Date(),
+      };
+
+      const createdCustomerFile = await databaseService.updateCustomerFile(
+        file_id,
+        customerFileData
+      );
+
+      if (createdCustomerFile) {
+        resp.status = 201;
+        resp.message = "File has been updated";
+        resp.data = createdCustomerFile;
+        resp.send(res);
+      } else {
+        resp.status = 500;
+        resp.message = "Error while uploading the file";
+        resp.data = null;
+        resp.send(res);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      resp.status = 500;
+      resp.message = "Error while uploading the file";
+      resp.send(res);
+    }
+  },
+
+  async deleteCustomerFile(req, res) {
+    const id = req.params.id;
+    await databaseService.deleteCustomerFile(id);
+    const response = new JsonResponse(
+      200,
+      {},
+      "Customer file has been deleted"
+    );
+    response.send(res);
+  },
+
+  async getDetailFile(req, res) {
+    const fileId = req.params.fileId;
+    const files = await databaseService.getCustomerFileById(fileId);
+    console.log(files);
+    const response = new JsonResponse(
+      200,
+      { files },
+      "File has been retrieved"
+    );
     response.send(res);
   },
 };

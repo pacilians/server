@@ -1,10 +1,15 @@
-const { databaseRepository } = require("../repository");
-const { Customer, BoardOfDirector, BankAccount } = require("../../core/model");
+const { databaseRepository, masterDataRepository } = require("../repository");
+const {
+  Customer,
+  BoardOfDirector,
+  BankAccount,
+  CustomerFile,
+} = require("../../core/model");
 
 const DatabaseService = {
   /**
    *
-   * Database
+   * Database Core Customer
    * Customer Field Related
    */
   async createCustomer(customer) {
@@ -35,6 +40,23 @@ const DatabaseService = {
       }
     }
 
+    const mandatoryFile = await masterDataRepository.getAllMandatory();
+
+    Promise.all(
+      mandatoryFile.map(async (ctx) => {
+        const customerFileData = {
+          id_customer: addedCustomer.id,
+          name: ctx.name,
+          type: "MANDATORY",
+          file: null,
+          created_at: new Date(),
+          updated_at: new Date(),
+        };
+
+        await this.createCustomerFile(customerFileData);
+      })
+    );
+
     return addedCustomer;
   },
 
@@ -46,8 +68,36 @@ const DatabaseService = {
     let bods = await databaseRepository.getBoardOfDirectorByCustomerId(
       customer.id
     );
+
+    let files = await databaseRepository.getCustomerFileByCustomerId(
+      customer.id
+    );
+
+    let file = [];
+    let mandatory = [];
+    let additional = [];
+    let all = files.forEach((ctx) => {
+      let add = {
+        id: ctx.id,
+        id_customer: ctx.id_customer,
+        name: ctx.name,
+        type: ctx.type,
+        created_at: ctx.created_at,
+        updated_at: ctx.updated_at,
+      };
+
+      file.push(add);
+
+      if (ctx.type === "MANDATORY") mandatory.push(add);
+
+      if (ctx.type === "ADDITIONAL") additional.push(add);
+    });
     customer.bank_account = banks;
     customer.board_of_director = bods;
+    customer.file = all;
+    customer.mandatory_file = mandatory
+    customer.additional_file = additional
+    
     return customer;
   },
 
@@ -55,7 +105,6 @@ const DatabaseService = {
     let cst = await databaseRepository.getCustomerById(id);
     let updatedCustomer = new Customer();
     updatedCustomer.spread(cst);
-
 
     if (customer.name) {
       updatedCustomer.name = customer.name;
@@ -77,8 +126,8 @@ const DatabaseService = {
 
   async deleteCustomer(id) {
     let customer = await databaseRepository.getCustomerById(id);
-    await databaseRepository.deleteBankAccountByCustomerId(customer.id)
-    await databaseRepository.deleteBoardOfDirectorByCustomerId(customer.id)
+    await databaseRepository.deleteBankAccountByCustomerId(customer.id);
+    await databaseRepository.deleteBoardOfDirectorByCustomerId(customer.id);
     await databaseRepository.deleteCustomer(id);
     return customer;
   },
@@ -116,7 +165,7 @@ const DatabaseService = {
 
   /**
    *
-   * Database
+   * Database Bak Account
    * Bank Account Field Related
    */
   async createBankAccount(bankAccount) {
@@ -127,13 +176,16 @@ const DatabaseService = {
     return await databaseRepository.deleteBankAccount(id);
   },
   async updateBankAccount(id, bankAccount) {
-    const updatedBankAccount = await databaseRepository.updateBankAccount(id, bankAccount);
+    const updatedBankAccount = await databaseRepository.updateBankAccount(
+      id,
+      bankAccount
+    );
     return updatedBankAccount;
   },
 
   /**
    *
-   * Database
+   * Database BOD
    * Board of Director Field Related
    */
   async createBoardOfDirector(boardOfDirector) {
@@ -144,15 +196,60 @@ const DatabaseService = {
     return await databaseRepository.deleteBoardOfDirector(id);
   },
   async updateBoardOfDirector(id, boardOfDirector) {
-    const updatedBOD =  await databaseRepository.updateBoardOfDirector(id, boardOfDirector);
+    const updatedBOD = await databaseRepository.updateBoardOfDirector(
+      id,
+      boardOfDirector
+    );
     return updatedBOD;
   },
 
   /**
    *
-   * Database
+   * Database Files
    * Files Related
    */
+
+  async createCustomerFile(customerFile) {
+    const createdFile = await databaseRepository.createCustomerFile(
+      customerFile
+    );
+    if (!createdFile) return null;
+
+    const addedCustomerFile = new CustomerFile();
+    addedCustomerFile.spread(createdFile);
+
+    return addedCustomerFile;
+  },
+
+  async getCustomerFileById(fileId) {
+    const file = await databaseRepository.getCustomerFileById(fileId);
+    return file;
+  },
+
+  async getCustomerFileByCustomerId(customerId) {
+    const file = await databaseRepository.getCustomerFileByCustomerId(
+      customerId
+    );
+    return file;
+  },
+
+  async updateCustomerFile(id, updatedFile) {
+    let updatedCustomerFile = await databaseRepository.updateCustomerFile(
+      id,
+      updatedFile
+    );
+    updatedCustomerFile.file = "";
+    return updatedCustomerFile;
+  },
+
+  async deleteCustomerFile(id) {
+    await databaseRepository.deleteCustomerFile(id);
+  },
+
+  async getAllCustomerFiles() {
+    const files = await databaseRepository.getAllCustomerFiles();
+    return files;
+  },
 };
 
 module.exports = DatabaseService;

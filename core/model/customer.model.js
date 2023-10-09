@@ -49,6 +49,9 @@ class Customer {
     this.updated_at = data.updated_at;
     this.board_of_director = data.board_of_director || [];
     this.bank_account = data.bank_account || [];
+    this.file = data.file || []
+    this.mandatory_file = data.mandatory_file || []
+    this.additional_file = data.additional_file || []
   }
 
   addBoardOfDirector(board_of_director) {
