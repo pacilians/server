@@ -19,7 +19,7 @@ const MasterDataController = {
     const createdBusiness = await masterDataService.createBusiness(name);
     const response = new JsonResponse(
       200,
-      { user: createdBusiness },
+      { id: createdBusiness },
       "Success creating business"
     );
 
@@ -53,7 +53,7 @@ const MasterDataController = {
     const createdService = await masterDataService.createService(name);
     const response = new JsonResponse(
       200,
-      { user: createdService },
+      { id: createdService },
       "Success creating service"
     );
 
@@ -87,7 +87,7 @@ const MasterDataController = {
     const createdMandatory = await masterDataService.createMandatory(name);
     const response = new JsonResponse(
       200,
-      { user: createdMandatory },
+      { id: createdMandatory },
       "Success creating mandatory"
     );
 

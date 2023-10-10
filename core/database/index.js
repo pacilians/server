@@ -7,8 +7,6 @@ const config = {
   password: "propensi2023",
   database: "master",
   waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
 };
 
 const database = {
