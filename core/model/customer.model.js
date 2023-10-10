@@ -4,6 +4,7 @@ class Customer {
     name,
     address,
     telephone,
+    email,
     expiry_date,
     business_category,
     service,
@@ -19,6 +20,7 @@ class Customer {
     this.name = name;
     this.address = address;
     this.telephone = telephone;
+    this.email = email
     this.expiry_date = expiry_date;
     this.business_category = business_category;
     this.service = service;
@@ -39,6 +41,7 @@ class Customer {
     this.name = data.name;
     this.address = data.address;
     this.telephone = data.telephone;
+    this.email = data.email;
     this.expiry_date = data.expiry_date;
     this.business_category = data.business_category;
     this.service = data.service;

@@ -10,11 +10,12 @@ const DatabaseController = {
 
   async createCustomer(req, res) {
     const customer = plainToClass(Customer, req.body);
+    customer.expiry_date = new Date()
     const createdCustomer = await databaseService.createCustomer(customer);
 
     const response = new JsonResponse(
       201,
-      { customer: customer },
+      { customer: createdCustomer },
       "Customer has been created"
     );
     response.send(res);

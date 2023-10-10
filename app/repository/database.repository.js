@@ -17,10 +17,11 @@ const DatabaseRepository = {
       key_person_name,
       key_person_dob,
       key_person_hp,
+      email,
     } = customer;
     const created_at = new Date();
     const created = await db.query(
-      "INSERT INTO customer (id, name, address, telephone, expiry_date, business_category, service, key_person_name, key_person_dob, key_person_hp, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "INSERT INTO customer (id, name, address, telephone, expiry_date, business_category, service, key_person_name, key_person_dob, key_person_hp, created_at, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
       [
         id,
         name,
@@ -33,6 +34,7 @@ const DatabaseRepository = {
         key_person_dob,
         key_person_hp,
         created_at,
+        email
       ]
     );
 
@@ -48,6 +50,7 @@ const DatabaseRepository = {
       key_person_name,
       key_person_dob,
       key_person_hp,
+      email
     };
 
     return createdCustomer;
