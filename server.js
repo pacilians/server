@@ -10,6 +10,11 @@ class Server {
 
   starter() {
     this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(
+      cors({
+        origin: "*",
+      })
+    );
     this.app.use(express.json());
     this.app.use("/", router);
     this.app.use((err, req, res, next) => {
@@ -21,7 +26,6 @@ class Server {
         data: previousError,
       });
     });
-
   }
 
   run(port) {
