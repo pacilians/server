@@ -3,21 +3,22 @@ const router = express.Router();
 const masterDataController = require('../app/controller/master-data.controller')
 
 const authJwt = require('../core/middleware/authjwt');
+const { wrap } = require("../core/error/error-handler")
 
 // router.use(authJwt);
 
-router.get('/', masterDataController.getAllData)
+router.get('/', wrap(masterDataController.getAllData))
 
-router.post('/business', masterDataController.createBusiness);
-router.get('/business', masterDataController.getAllBusiness);
-router.delete("/business/:id", masterDataController.deleteBusiness);
+router.post('/business', wrap(masterDataController.createBusiness));
+router.get('/business', wrap(masterDataController.getAllBusiness));
+router.delete("/business/:id", wrap(masterDataController.deleteBusiness));
 
-router.post('/service', masterDataController.createService);
-router.get('/service', masterDataController.getAllService);
-router.delete("/service/:id", masterDataController.deleteService);
+router.post('/service', wrap(masterDataController.createService))
+router.get('/service', wrap(masterDataController.getAllService))
+router.delete("/service/:id", wrap(masterDataController.deleteService))
 
-router.post('/mandatory', masterDataController.createMandatory);
-router.get('/mandatory', masterDataController.getAllMandatory);
-router.delete("/mandatory/:id", masterDataController.deleteMandatory);
+router.post('/mandatory', wrap(masterDataController.createMandatory))
+router.get('/mandatory', wrap(masterDataController.getAllMandatory))
+router.delete("/mandatory/:id", wrap(masterDataController.deleteMandatory))
 
 module.exports = router;

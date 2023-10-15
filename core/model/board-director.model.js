@@ -1,10 +1,11 @@
 class BoardOfDirector {
-  constructor(id, id_customer, name, npp, role, description, photo) {
+  constructor(id, id_customer, name, npp, role, description, photo, birth_date) {
     this.id = id;
     this.id_customer = id_customer;
     this.name = name;
     this.npp = npp;
     this.role = role;
+    this.birth_date = birth_date;
     this.description = description;
     this.photo = photo;
   }
@@ -15,6 +16,7 @@ class BoardOfDirector {
     this.name = data.name;
     this.npp = data.npp;
     this.role = data.role;
+    this.birth_date = data.birth_date;
     this.description = data.description;
     this.photo = data.photo;
   }

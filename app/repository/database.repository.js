@@ -149,12 +149,12 @@ const DatabaseRepository = {
    */
   async createBoardOfDirector(boardOfDirector) {
     const id = uuidv4();
-    const { id_customer, name, photo, npp, role, description } =
+    const { id_customer, name, photo, npp, role, description, birth_date } =
       boardOfDirector;
 
     const created = await db.query(
-      "INSERT INTO board_of_director (id, id_customer, name, photo, npp, role, description) VALUES (?, ?, ?, ?, ?, ?, ?);",
-      [id, id_customer, name, photo, npp, role, description]
+      "INSERT INTO board_of_director (id, id_customer, name, photo, npp, role, description, birth_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+      [id, id_customer, name, photo, npp, role, description, birth_date]
     );
 
     if (!created) return null;
@@ -166,6 +166,7 @@ const DatabaseRepository = {
       npp,
       role,
       description,
+      birth_date
     };
 
     return createdBoardOfDirector;
@@ -174,8 +175,8 @@ const DatabaseRepository = {
     const { name, photo, npp, role, description } = boardOfDirector;
 
     const updated = await db.query(
-      "UPDATE board_of_director SET name = ?, photo = ?, npp = ?, role = ?, description = ? WHERE id = ?",
-      [name, photo, npp, role, description, id]
+      "UPDATE board_of_director SET name = ?, photo = ?, npp = ?, role = ?, description = ?, birth_date = ? WHERE id = ?",
+      [name, photo, npp, role, description, birth_date, id]
     );
 
     if (!updated) return null;
@@ -187,6 +188,7 @@ const DatabaseRepository = {
       npp,
       role,
       description,
+      birth_date
     };
 
     return updatedBoardOfDirector;

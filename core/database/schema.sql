@@ -2,7 +2,6 @@ INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `descripti
 VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'Admin System', '001', 'ADMIN', 'Admin user', 0);
 
 -- 
-
 CREATE TABLE `user` (
   `id` varchar(255) PRIMARY KEY,
   `email` varchar(255) UNIQUE,
@@ -20,6 +19,7 @@ CREATE TABLE `customer` (
   `id` varchar(255) PRIMARY KEY,
   `name` varchar(255),
   `address` varchar(255),
+  `email` varchar(255),
   `telephone` varchar(255),
   `expiry_date` datetime,
   `business_category` varchar(255),
@@ -30,6 +30,17 @@ CREATE TABLE `customer` (
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null,
   `status` int DEFAULT 0
+);
+
+CREATE TABLE `board_of_director` (
+  `id` varchar(255) PRIMARY KEY,
+  `id_customer` varchar(255),
+  `name` varchar(255),
+  `photo` longblob DEFAULT null,
+  `npp` varchar(255),
+  `role` varchar(255),
+  `birth_date` datetime,
+  `description` varchar(255)
 );
 
 CREATE TABLE `bank_account` (
@@ -70,16 +81,6 @@ CREATE TABLE `customer_file` (
   `file` longblob DEFAULT null,
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null
-);
-
-CREATE TABLE `board_of_director` (
-  `id` varchar(255) PRIMARY KEY,
-  `id_customer` int,
-  `name` varchar(255),
-  `photo` longblob DEFAULT null,
-  `npp` varchar(255),
-  `role` varchar(255),
-  `description` varchar(255)
 );
 
 CREATE TABLE `notification` (
