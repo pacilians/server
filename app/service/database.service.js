@@ -95,9 +95,9 @@ const DatabaseService = {
     customer.bank_account = banks;
     customer.board_of_director = bods;
     customer.file = all;
-    customer.mandatory_file = mandatory
-    customer.additional_file = additional
-    
+    customer.mandatory_file = mandatory;
+    customer.additional_file = additional;
+
     return customer;
   },
 
@@ -117,6 +117,24 @@ const DatabaseService = {
     }
     if (customer.email) {
       updatedCustomer.email = customer.email;
+    }
+    if (customer.service) {
+      updatedCustomer.service = customer.service;
+    }
+    if (customer.business_category) {
+      updatedCustomer.business_category = customer.business_category;
+    }
+    if (customer.expiry_date) {
+      updatedCustomer.expiry_date = customer.expiry_date;
+    }
+    if (customer.key_person_name) {
+      updatedCustomer.key_person_name = customer.key_person_name;
+    }
+    if (customer.key_person_hp) {
+      updatedCustomer.key_person_hp = customer.key_person_hp;
+    }
+    if (customer.key_person_dob) {
+      updatedCustomer.key_person_hp = customer.key_person_dob;
     }
 
     await databaseRepository.updateCustomer(id, updatedCustomer);
