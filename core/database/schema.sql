@@ -1,7 +1,3 @@
-INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `description`, `is_notify`)
-VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'Admin System', '001', 'ADMIN', 'Admin user', 0);
-
--- 
 CREATE TABLE `user` (
   `id` varchar(255) PRIMARY KEY,
   `email` varchar(255) UNIQUE,
@@ -101,31 +97,49 @@ CREATE TABLE `announcement` (
   `updated_at` timestamp DEFAULT null
 );
 
-CREATE TABLE `audit_period` (
+CREATE TABLE `audit_event` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
+  `created_at` datetime,
   `start` datetime,
   `end` datetime
 );
 
-CREATE TABLE `audit_file` (
+CREATE TABLE `audit` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_audit_period` int,
-  `file` longblob DEFAULT null,
-  `name` varchar(255)
+  `id_audit_event` int,
+  `name` varchar(255),
+  `created_at` datetime,
+  `updated_at` datetime DEFAULT null,
+  `status` varchar(255),
+  `file` longblob DEFAULT null
 );
 
 CREATE TABLE `securities_account` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `id_customer` varchar(255),
-  `action` varchar(255),
-  `investor_type` varchar(255),
-  `investor_client_type` varchar(255),
-  `account_local_code` varchar(255),
-  `account_client_code` varchar(255),
-  `investor_company_name` varchar(255),
-  `investor_company_bic_code` varchar(255),
-  `account_tax_code` varchar(255)
+  `kode_bk` varchar(255),
+  `no_rekening_investor` varchar(255),
+  `nama_perusahaan` varchar(255),
+  `nama_tengah` varchar(255),
+  `nama_belakang` varchar(255),
+  `ktp` varchar(255),
+  `npwp` varchar(255),
+  `no_paspor` varchar(255),
+  `no_pendaftaran_usaha` varchar(255),
+  `tanggal_pendirian` datetime,
+  `tempat_penidiran` datetime,
+  `tipe_investor` varchar(255),
+  `jenis_kelamin` varchar(255),
+  `jenis_pekerjaan` varchar(255),
+  `alamat_identitas_1` varchar(255),
+  `alamat_identitas_2` varchar(255),
+  `kode_kota` varchar(255),
+  `kode_provinsi` varchar(255),
+  `kode_negara` varchar(255),
+  `no_telepon` varchar(255),
+  `no_hp` varchar(255),
+  `email` varchar(255)
 );
 
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
@@ -141,7 +155,5 @@ ALTER TABLE `customer_file` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer
 ALTER TABLE `bank_account` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);
 
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `customer_file` (`id`);
-
-ALTER TABLE `audit_file` ADD FOREIGN KEY (`id_audit_period`) REFERENCES `audit_period` (`id`);
 
 ALTER TABLE `securities_account` ADD FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id`);
