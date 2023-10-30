@@ -95,7 +95,7 @@ const DatabaseService = {
     });
     customer.bank_account = banks;
     customer.board_of_director = bods;
-    customer.file = all;
+    customer.file = all;  
     customer.mandatory_file = mandatory;
     customer.additional_file = additional;
 
@@ -135,7 +135,7 @@ const DatabaseService = {
       updatedCustomer.key_person_hp = customer.key_person_hp;
     }
     if (customer.key_person_dob) {
-      updatedCustomer.key_person_hp = customer.key_person_dob;
+      updatedCustomer.key_person_dob = customer.key_person_dob;
     }
 
     await databaseRepository.updateCustomer(id, updatedCustomer);
