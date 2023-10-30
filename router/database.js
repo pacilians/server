@@ -10,6 +10,7 @@ const authJwt = require('../core/middleware/authjwt');
 router.use(authJwt);
 router.post('/', wrap(databaseController.createCustomer));
 router.get('/', wrap(databaseController.getAllCustomers));
+router.get("/checklist", wrap(databaseController.checklist))
 router.get("/:id", wrap(databaseController.getDetailCustomer));
 router.put("/:id", wrap(databaseController.updateCustomer))
 router.put("/bod/:id", wrap(databaseController.updateBoardOfDirector))
@@ -21,5 +22,6 @@ router.post("/file/:customerId", upload.single("file"), wrap(databaseController.
 router.put("/file/:fileId", upload.single("file"), wrap(databaseController.updateCustomerFile))
 router.delete("/file/:fileId", wrap(databaseController.deleteCustomerFile))
 router.get("/file/:fileId", wrap(databaseController.getDetailFile))
+
 
 module.exports = router;

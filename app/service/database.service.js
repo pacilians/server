@@ -1,4 +1,5 @@
 const { databaseRepository, masterDataRepository } = require("../repository");
+const masterDataService = require("./master-data.service")
 const {
   Customer,
   BoardOfDirector,
@@ -268,6 +269,51 @@ const DatabaseService = {
     const files = await databaseRepository.getAllCustomerFiles();
     return files;
   },
+
+  async checklist(){
+    let response = {}
+    let customer = await this.getAllCustomers()
+    let mandatoryFile = await masterDataService.getAllMandatory()
+
+    // response.column = 
+
+    // Getting Columns
+    let col = []
+    for(let i = 0; i < mandatoryFile.length; i ++){
+      col.push(mandatoryFile[i].name)
+    }
+    response.column = col;
+    response.checklist = []
+
+
+    // Checking to each files of customer
+    for(let i = 0; i < customer.length; i ++){
+      const cust = customer[i]
+      const files = await this.getCustomerFileByCustomerId(cust.id)
+
+      let check = {}
+
+      for (let index = 0; index < mandatoryFile.length; index ++){
+        check[mandatoryFile[index].name] = 0
+      }
+
+      for(let index = 0; index < files.length; index ++){
+        if(check.hasOwnProperty(files[index].name)){
+          if(files[index].file !== null)
+            check[files[index].name] = 1
+        }
+      }
+
+      let cur = response.checklist
+      cur.push({
+        id: customer[i].id,
+        name: customer[i].name,
+        check : check
+      })
+      response.checklist = cur;
+    }
+    return response
+  }
 };
 
 module.exports = DatabaseService;

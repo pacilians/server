@@ -241,6 +241,16 @@ const DatabaseController = {
     );
     response.send(res);
   },
+
+  async checklist(req, res){
+    const checklist = await databaseService.checklist();
+    const response = new JsonResponse(
+      200,
+      checklist,
+      "File has been retrieved"
+    );
+    response.send(res);
+  }
 };
 
 module.exports = DatabaseController;
