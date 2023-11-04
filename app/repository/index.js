@@ -3,6 +3,7 @@ const masterDataRepository = require("./master-data.repository")
 const announcementRepository = require("./announcement.repository")
 const databaseRepository = require("./database.repository")
 const auditRepository = require("./audit.repository")
+const securitiesAccountRepository = require("./security-account.repository")
 
 module.exports = {
     userRepository,
@@ -10,4 +11,5 @@ module.exports = {
     announcementRepository,
     databaseRepository,
     auditRepository,
+    securitiesAccountRepository,
 }
