@@ -313,7 +313,22 @@ const DatabaseService = {
       response.checklist = cur;
     }
     return response
+  },
+
+  /**
+   * Nasabah Approval
+   */
+
+  async changeStatusCustomer(id_customer, status){
+    return databaseRepository.changeStatusNasabah(id_customer, status);
+  },
+  async createCommentCustomer(comment){
+    return databaseRepository.createCommentNasabah(comment)
+  },
+  async listCommentCustomer(id_customer){
+    return databaseRepository.getApprovalCommentByNasabahId(id_customer)
   }
+
 };
 
 module.exports = DatabaseService;
