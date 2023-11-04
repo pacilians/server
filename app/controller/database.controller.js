@@ -1,7 +1,7 @@
 const { databaseService } = require("../service");
 const { plainToClass } = require("class-transformer");
 const JsonResponse = require("../../core/response");
-const { Customer } = require("../../core/model");
+const { Customer, CustomerComment } = require("../../core/model");
 
 const DatabaseController = {
   /**
@@ -10,7 +10,7 @@ const DatabaseController = {
 
   async createCustomer(req, res) {
     const customer = plainToClass(Customer, req.body);
-    customer.expiry_date = new Date()
+    customer.expiry_date = new Date();
     const createdCustomer = await databaseService.createCustomer(customer);
 
     const response = new JsonResponse(
@@ -220,7 +220,7 @@ const DatabaseController = {
   },
 
   async deleteCustomerFile(req, res) {
-    const id = req.params.id;
+    const id = req.params.file;
     await databaseService.deleteCustomerFile(id);
     const response = new JsonResponse(
       200,
@@ -242,12 +242,64 @@ const DatabaseController = {
     response.send(res);
   },
 
-  async checklist(req, res){
+  async checklist(req, res) {
     const checklist = await databaseService.checklist();
     const response = new JsonResponse(
       200,
       checklist,
       "File has been retrieved"
+    );
+    response.send(res);
+  },
+
+  /**
+   * Approval Nasabah
+   */
+  async createCustomerComment(req, res) {
+    const id = req.params.id;
+    const comment = plainToClass(CustomerComment, req.body);
+    comment.id_customer = id
+    const createdComment = await databaseService.createCommentCustomer(comment);
+
+    const response = new JsonResponse(
+      201,
+      { customer: createdComment },
+      "Comment has been created"
+    );
+    response.send(res);
+  },
+
+  async updateStatusCustomer(req, res) {
+    const id = req.params.id;
+
+    const { status } = req.body;
+
+    const updated = await databaseService.changeStatusCustomer(id, status);
+
+    const response = new JsonResponse(200, {}, "Status has been updated");
+    response.send(res);
+  },
+
+  async listCustomerComment(req, res){
+    const id = req.params.id;
+
+    const comment = await databaseService.listCommentCustomer(id)
+
+    const response = new JsonResponse(
+      200,
+      { comment: comment },
+      "Comment has been retrieved"
+    );
+    response.send(res);
+  },
+
+  async listCustomerToApprove(req, res){
+    const customers = await databaseService.getAllCustomers();
+    const filtered = customers.filter((ctx)=> ctx.status === 0)
+    const response = new JsonResponse(
+      200,
+      { customers: filtered },
+      "All customers who need approval have been retrieved"
     );
     response.send(res);
   }

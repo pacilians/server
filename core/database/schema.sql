@@ -1,3 +1,6 @@
+INSERT INTO `user` (`id`, `email`, `password`, `name`, `npp`, `role`, `description`, `is_notify`)
+VALUES  ('5c5e4a62-b4eb-45e0-b3b1-1089445c4c7b', 'admin@bni.co.id', 'admin', 'Admin System', '001', 'ADMIN', 'Admin user', 0);
+
 CREATE TABLE `user` (
   `id` varchar(255) PRIMARY KEY,
   `email` varchar(255) UNIQUE,
@@ -141,6 +144,14 @@ CREATE TABLE `securities_account` (
   `no_hp` varchar(255),
   `email` varchar(255)
 );
+
+CREATE TABLE `customer_comment` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id_customer` varchar(255),
+  `comment` varchar(255),
+  `created_at` datetime
+);
+
 
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
 
