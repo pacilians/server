@@ -66,6 +66,7 @@ const AuditService = {
   async deleteAudit(id) {
     return await auditRepository.deleteAudit(id);
   },
+  
 
   /**
    * Audit Event
@@ -76,7 +77,9 @@ const AuditService = {
   },
 
   async getAuditEventDetail(id) {
-    return await auditRepository.getAuditEventDetail(id);
+    const data = await auditRepository.getAuditEventDetail(id);
+    const audit = plainToClass(AuditEvent, data);
+    return audit
   },
 
   async updateAuditEvent(id, audit_event) {
