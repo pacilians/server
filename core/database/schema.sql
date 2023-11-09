@@ -124,6 +124,7 @@ CREATE TABLE `securities_account` (
   `kode_bk` varchar(255),
   `no_rekening_investor` varchar(255),
   `nama_perusahaan` varchar(255),
+  `nama_awal` varchar(255),
   `nama_tengah` varchar(255),
   `nama_belakang` varchar(255),
   `ktp` varchar(255),
@@ -131,7 +132,7 @@ CREATE TABLE `securities_account` (
   `no_paspor` varchar(255),
   `no_pendaftaran_usaha` varchar(255),
   `tanggal_pendirian` datetime,
-  `tempat_penidiran` datetime,
+  `tempat_penidiran` varchar(255),
   `tipe_investor` varchar(255),
   `jenis_kelamin` varchar(255),
   `jenis_pekerjaan` varchar(255),
@@ -142,7 +143,9 @@ CREATE TABLE `securities_account` (
   `kode_negara` varchar(255),
   `no_telepon` varchar(255),
   `no_hp` varchar(255),
-  `email` varchar(255)
+  `email` varchar(255),
+  `created_at` datetime,
+  `updated_at` datetime DEFAULT null
 );
 
 CREATE TABLE `customer_comment` (
@@ -151,7 +154,6 @@ CREATE TABLE `customer_comment` (
   `comment` varchar(255),
   `created_at` datetime
 );
-
 
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);
 
