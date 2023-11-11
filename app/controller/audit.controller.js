@@ -20,6 +20,14 @@ const AuditController = {
     response.send(res);
   },
 
+  async getAuditDetail(req, res){
+    const id = req.params.id;
+    const audit = await auditService.getAuditEventDetail(id)
+    console.log(audit);
+    const response = new JsonResponse(200, {audit: audit}, "Audit has been received");
+    response.send(res);
+  },
+
   async createBulkAudit(req, res) {
     const data = req.body;
     const audit = await auditService.createBulk(data);

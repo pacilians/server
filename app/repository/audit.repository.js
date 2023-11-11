@@ -67,7 +67,7 @@ const AuditRepository = {
       "SELECT name, created_at, start, end FROM audit_event WHERE id = ?",
       [id]
     );
-    return rows;
+    return rows[0];
   },
   deleteAuditEvent: async (id) => {
     return await db.query("DELETE FROM audit_event WHERE id = ?", [id]);

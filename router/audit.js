@@ -13,6 +13,7 @@ router.get("/", wrap(auditController.getAuditList))
 router.post("/",wrap(auditController.createBulkAudit))
 
 router.post('/event', wrap(auditController.createAuditEvent))
+router.get('/event/:id', wrap(auditController.getAuditDetail))
 router.delete("/event/:id", wrap(auditController.deleteAuditEvent))
 router.put("/event/:id",wrap(auditController.updateAuditEvent))
 

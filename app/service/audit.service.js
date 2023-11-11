@@ -1,5 +1,6 @@
 const { auditRepository } = require("../repository");
 const { Audit, AuditEvent } = require("../../core/model");
+const moment = require('moment');
 
 const AuditService = {
   async getAllAudit() {
@@ -11,6 +12,9 @@ const AuditService = {
       let current = event[i];
       let OEventAudit = new AuditEvent();
       OEventAudit.spread(current);
+      OEventAudit.start = moment(OEventAudit.start).format('DD-MM-YYYY');
+      OEventAudit.end = moment(OEventAudit.end).format('DD-MM-YYYY');
+      OEventAudit.created_at = moment(OEventAudit.created_at).format('DD-MM-YYYY');
 
       const item = await auditRepository.getDetailAuditByEventId(current.id);
 
@@ -78,7 +82,25 @@ const AuditService = {
 
   async getAuditEventDetail(id) {
     const data = await auditRepository.getAuditEventDetail(id);
-    const audit = plainToClass(AuditEvent, data);
+    const audit = new AuditEvent();
+    audit.spread(data)
+    audit.start =  moment(audit.start).format('DD-MM-YYYY');
+    audit.end =  moment(audit.end).format('DD-MM-YYYY');
+    audit.created_at =  moment(audit.created_at).format('DD-MM-YYYY');
+
+    const item = await auditRepository.getDetailAuditByEventId(id);
+
+    for (let j = 0; j < item.length; j++) {
+      const OAudit = new Audit();
+      OAudit.spread(item[j]);
+      OAudit.file_exist = true;
+      OAudit.created_at = moment(OAudit.created_at).format('DD-MM-YYYY');
+
+      if (OAudit.file === null) OAudit.file_exist = false;
+
+      OAudit.file = null;
+      audit.addAudit(OAudit);
+    }
     return audit
   },
 
