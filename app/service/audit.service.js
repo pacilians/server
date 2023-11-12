@@ -12,9 +12,9 @@ const AuditService = {
       let current = event[i];
       let OEventAudit = new AuditEvent();
       OEventAudit.spread(current);
-      OEventAudit.start = moment(OEventAudit.start).format('DD-MM-YYYY');
-      OEventAudit.end = moment(OEventAudit.end).format('DD-MM-YYYY');
-      OEventAudit.created_at = moment(OEventAudit.created_at).format('DD-MM-YYYY');
+      OEventAudit.start = moment(OEventAudit.start).format('YYYY-MM-DD');
+      OEventAudit.end = moment(OEventAudit.end).format('YYYY-MM-DD');
+      OEventAudit.created_at = moment(OEventAudit.created_at).format('YYYY-MM-DD');
 
       const item = await auditRepository.getDetailAuditByEventId(current.id);
 
@@ -84,9 +84,9 @@ const AuditService = {
     const data = await auditRepository.getAuditEventDetail(id);
     const audit = new AuditEvent();
     audit.spread(data)
-    audit.start =  moment(audit.start).format('DD-MM-YYYY');
-    audit.end =  moment(audit.end).format('DD-MM-YYYY');
-    audit.created_at =  moment(audit.created_at).format('DD-MM-YYYY');
+    audit.start =  moment(audit.start).format('YYYY-MM-DD');
+    audit.end =  moment(audit.end).format('YYYY-MM-DD');
+    audit.created_at =  moment(audit.created_at).format('YYYY-MM-DD');
 
     const item = await auditRepository.getDetailAuditByEventId(id);
 
@@ -94,7 +94,7 @@ const AuditService = {
       const OAudit = new Audit();
       OAudit.spread(item[j]);
       OAudit.file_exist = true;
-      OAudit.created_at = moment(OAudit.created_at).format('DD-MM-YYYY');
+      OAudit.created_at = moment(OAudit.created_at).format('YYYY-MM-DD');
 
       if (OAudit.file === null) OAudit.file_exist = false;
 
