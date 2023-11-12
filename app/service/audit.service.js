@@ -98,7 +98,6 @@ const AuditService = {
 
       if (OAudit.file === null) OAudit.file_exist = false;
 
-      OAudit.file = null;
       audit.addAudit(OAudit);
     }
     return audit

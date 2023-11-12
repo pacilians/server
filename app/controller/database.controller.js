@@ -295,7 +295,7 @@ const DatabaseController = {
 
   async listCustomerToApprove(req, res){
     const customers = await databaseService.getAllCustomers();
-    const filtered = customers.filter((ctx)=> ctx.status === 0)
+    const filtered = customers.filter((ctx)=> ctx.status === 0 || ctx.status === 1)
     const response = new JsonResponse(
       200,
       { customers: filtered },
