@@ -86,7 +86,7 @@ const DatabaseRepository = {
   },
   async getAllCustomers() {
     const [rows] = await db.query(
-      "SELECT `id`, `name`, `address`, `email`, `telephone`, `expiry_date`, `business_category`, `service`, `key_person_name`, `key_person_dob`, `key_person_hp`, `created_at`, `updated_at`, `status` FROM customer;"
+      "SELECT `id`, `name`, `address`, `email`, `telephone`, `expiry_date`, `business_category`, `service`, `key_person_name`, `key_person_dob`, `key_person_hp`, `created_at`, `updated_at`, `status`, `comment` FROM customer;"
     );
     return rows;
   },

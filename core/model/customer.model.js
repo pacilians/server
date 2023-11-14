@@ -14,6 +14,7 @@ class Customer {
     created_at,
     updated_at,
     status,
+    comment,
     board_of_director = [],
     bank_account = [],
   ) {
@@ -33,6 +34,7 @@ class Customer {
     this.board_of_director = board_of_director;
     this.bank_account = bank_account;
     this.status = status;
+    this.comment = comment;
     this.file = []
     this.mandatory_file = []
     this.additional_file = []
@@ -56,6 +58,7 @@ class Customer {
     this.bank_account = data.bank_account || [];
     this.file = data.file || []
     this.status = data.status
+    this.comment = data.comment
     this.mandatory_file = data.mandatory_file || []
     this.additional_file = data.additional_file || []
   }
