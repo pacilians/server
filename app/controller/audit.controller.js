@@ -59,10 +59,10 @@ const AuditController = {
     response.send(res);
   },
   async updateFileAudit(req, res) {
-    let resp = new JsonResponse(200, null, "");
     const file_data = req.file;
     const id = req.params.id;
-    await auditService.updateFileAudit(id, file_data.buffer);
+    const file = await auditService.updateFileAudit(id, file_data.buffer);
+    let resp = new JsonResponse(200, file, "");
     resp.send(res);
   },
 

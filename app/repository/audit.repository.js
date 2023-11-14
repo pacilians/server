@@ -27,12 +27,14 @@ const AuditRepository = {
       "INSERT INTO audit (id_audit_event, name, created_at, status, file) VALUES (?, ?, ?, ?, ?)",
       [audit.id_audit_event, audit.name, now, audit.status, null]
     );
+    let res = audit
+    res.id = result.insertId
     return audit;
   },
 
   updateAuditFile: async (id, file) => {
     await db.query("UPDATE audit SET file = ? WHERE id = ?", [file, id]);
-    return id;
+    return file;
   },
 
   updateStatusAudit: async (id, status) => {
