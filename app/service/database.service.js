@@ -9,7 +9,6 @@ const {
 
 const DatabaseService = {
   /**
-   *
    * Database Core Customer
    * Customer Field Related
    */
@@ -159,6 +158,7 @@ const DatabaseService = {
       let customer = list_customer[i];
       let addedCustomer = new Customer();
       addedCustomer.spread(customer);
+      
       let banks = await databaseRepository.getBankAccountByCustomerId(
         customer.id
       );
@@ -318,12 +318,11 @@ const DatabaseService = {
   /**
    * Nasabah Approval
    */
-
   async changeStatusCustomer(id_customer, status){
     return databaseRepository.changeStatusNasabah(id_customer, status);
   },
-  async createCommentCustomer(comment){
-    return databaseRepository.createCommentNasabah(comment)
+  async updateCommentCustomer(id_customer, comment){
+    return databaseRepository.updateCommentCustomer(id_customer, comment);
   },
   async listCommentCustomer(id_customer){
     return databaseRepository.getApprovalCommentByNasabahId(id_customer)

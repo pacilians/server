@@ -48,7 +48,8 @@ const DatabaseController = {
   },
 
   async getAllCustomers(req, res) {
-    const customers = await databaseService.getAllCustomers();
+    let customers = await databaseService.getAllCustomers();
+    customers = customers.filter((item)=> item.status===2)
     const response = new JsonResponse(
       200,
       { customers },
@@ -255,40 +256,31 @@ const DatabaseController = {
   /**
    * Approval Nasabah
    */
-  async createCustomerComment(req, res) {
+  async updateCustomerApproval(req, res) {
     const id = req.params.id;
-    const comment = plainToClass(CustomerComment, req.body);
-    comment.id_customer = id
-    const createdComment = await databaseService.createCommentCustomer(comment);
 
+    const {
+      status,
+      comment
+    } = req.body
+
+    const approval = {}
+    approval.id_customer = id;
+    approval.comment = comment;
+    approval.status = status;
+
+
+    // Update Status Nasbah
+    await databaseService.changeStatusCustomer(approval.id_customer, status)
+
+    // Update Comment Nasabah
+    await databaseService.updateCommentCustomer(approval.id_customer, comment)
+
+  
     const response = new JsonResponse(
       201,
-      { customer: createdComment },
-      "Comment has been created"
-    );
-    response.send(res);
-  },
-
-  async updateStatusCustomer(req, res) {
-    const id = req.params.id;
-
-    const { status } = req.body;
-
-    const updated = await databaseService.changeStatusCustomer(id, status);
-
-    const response = new JsonResponse(200, {}, "Status has been updated");
-    response.send(res);
-  },
-
-  async listCustomerComment(req, res){
-    const id = req.params.id;
-
-    const comment = await databaseService.listCommentCustomer(id)
-
-    const response = new JsonResponse(
-      200,
-      { comment: comment },
-      "Comment has been retrieved"
+      { },
+      "Customer has been update"
     );
     response.send(res);
   },

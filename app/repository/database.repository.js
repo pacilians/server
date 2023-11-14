@@ -85,7 +85,9 @@ const DatabaseRepository = {
     await db.query("DELETE FROM customer WHERE id = ?", [id]);
   },
   async getAllCustomers() {
-    const [rows] = await db.query("SELECT `id`, `name`, `address`, `email`, `telephone`, `expiry_date`, `business_category`, `service`, `key_person_name`, `key_person_dob`, `key_person_hp`, `created_at`, `updated_at`, `status` FROM customer;");
+    const [rows] = await db.query(
+      "SELECT `id`, `name`, `address`, `email`, `telephone`, `expiry_date`, `business_category`, `service`, `key_person_name`, `key_person_dob`, `key_person_hp`, `created_at`, `updated_at`, `status` FROM customer;"
+    );
     return rows;
   },
   async updateCustomerStatus(id, status) {
@@ -286,28 +288,28 @@ const DatabaseRepository = {
     return rows;
   },
 
-  async createCommentNasabah(comment_nasabah) {
-    const dt = new Date()
-    const created = await db.query(
-      "INSERT INTO customer_comment (id_customer, comment, created_at) VALUES (?, ?, ?);",
-      [comment_nasabah.id_customer, comment_nasabah.comment, dt]
-    );
+  async updateCommentCustomer(id_customer, comment) {
+    const dt = new Date();
+    const created = await db.query("UPDATE customer SET comment=? WHERE id=?", [
+      comment,
+      id_customer,
+    ]);
 
     if (!created) return null;
 
-    return comment_nasabah;
+    return comment;
   },
 
-  async changeStatusNasabah(id_nasabah, status){
-    const [row] = await db.query(
-      "UPDATE customer SET status=? WHERE id=?",
-      [status, id_nasabah]
-    );
+  async changeStatusNasabah(id_nasabah, status) {
+    const [row] = await db.query("UPDATE customer SET status=? WHERE id=?", [
+      status,
+      id_nasabah,
+    ]);
 
     if (row) return id_nasabah;
 
     return null;
-  }
+  },
 };
 
 module.exports = DatabaseRepository;

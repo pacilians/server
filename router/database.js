@@ -12,10 +12,8 @@ router.post('/', wrap(databaseController.createCustomer));
 router.get('/', wrap(databaseController.getAllCustomers));
 
 // Related to approval
-router.get("/approval/:id", wrap(databaseController.listCustomerComment))
-router.post("/approval/:id", wrap(databaseController.createCustomerComment))
+router.put("/approval/:id", wrap(databaseController.updateCustomerApproval))
 router.get("/approval/", wrap(databaseController.listCustomerToApprove))
-router.post("/approval/status/:id", wrap(databaseController.updateStatusCustomer))
 
 router.get("/checklist", wrap(databaseController.checklist))
 router.get("/:id", wrap(databaseController.getDetailCustomer));
