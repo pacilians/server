@@ -6,6 +6,7 @@ class Customer {
     telephone,
     email,
     expiry_date,
+    birth_date,
     business_category,
     service,
     key_person_name,
@@ -26,6 +27,7 @@ class Customer {
     this.expiry_date = expiry_date;
     this.business_category = business_category;
     this.service = service;
+    this.birth_date = birth_date;
     this.key_person_name = key_person_name;
     this.key_person_dob = key_person_dob;
     this.key_person_hp = key_person_hp;
@@ -47,6 +49,7 @@ class Customer {
     this.telephone = data.telephone;
     this.email = data.email;
     this.expiry_date = data.expiry_date;
+    this.birth_date = data.birth_date;
     this.business_category = data.business_category;
     this.service = data.service;
     this.key_person_name = data.key_person_name;

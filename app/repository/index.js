@@ -4,6 +4,7 @@ const announcementRepository = require("./announcement.repository")
 const databaseRepository = require("./database.repository")
 const auditRepository = require("./audit.repository")
 const securitiesAccountRepository = require("./security-account.repository")
+const notificationRepository = require("./notification.repository")
 
 module.exports = {
     userRepository,
@@ -12,4 +13,5 @@ module.exports = {
     databaseRepository,
     auditRepository,
     securitiesAccountRepository,
+    notificationRepository
 }

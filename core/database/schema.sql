@@ -21,6 +21,7 @@ CREATE TABLE `customer` (
   `email` varchar(255),
   `telephone` varchar(255),
   `expiry_date` datetime,
+  `birth_date` datetime,
   `business_category` varchar(255),
   `service` varchar(255),
   `key_person_name` varchar(255),
@@ -28,7 +29,8 @@ CREATE TABLE `customer` (
   `key_person_hp` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp DEFAULT null,
-  `status` int DEFAULT 0
+  `status` int DEFAULT 0,
+  `comment` varchar(255) DEFAULT ""
 );
 
 CREATE TABLE `board_of_director` (
@@ -85,9 +87,12 @@ CREATE TABLE `customer_file` (
 CREATE TABLE `notification` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `id_customer` varchar(255),
-  `id_bod` varchar(255),
+  `type` varchar(255),
+  `id_person` varchar(255),
+  `name_person` varchar(255),
   `created_at` timestamp,
-  `message` text
+  `message` text,
+  `is_read` int DEFAULT 0
 );
 
 CREATE TABLE `announcement` (
@@ -146,13 +151,6 @@ CREATE TABLE `securities_account` (
   `email` varchar(255),
   `created_at` datetime,
   `updated_at` datetime DEFAULT null
-);
-
-CREATE TABLE `customer_comment` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_customer` varchar(255),
-  `comment` varchar(255),
-  `created_at` datetime
 );
 
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);

@@ -15,6 +15,7 @@ const database = {
     try {
       const pool = mysql.createPool(config);
       res = await pool.query(query, args);
+      await pool.end()
     } catch (error) {
       console.error(error);
       return null;

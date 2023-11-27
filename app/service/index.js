@@ -4,6 +4,7 @@ const announcementService = require("./announcement.service")
 const databaseService = require("./database.service")
 const auditService = require("./audit.service")
 const securitiesAccountService = require("./security-account.service")
+const notificationService = require("./notification.service")
 
 module.exports = {
     userService,
@@ -11,5 +12,6 @@ module.exports = {
     announcementService,
     databaseService,
     auditService,
-    securitiesAccountService
+    securitiesAccountService,
+    notificationService
 }

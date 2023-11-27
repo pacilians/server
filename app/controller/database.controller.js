@@ -7,7 +7,6 @@ const DatabaseController = {
   /**
    * Customer
    */
-
   async createCustomer(req, res) {
     const customer = plainToClass(Customer, req.body);
     customer.expiry_date = new Date();
