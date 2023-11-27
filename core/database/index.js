@@ -2,9 +2,9 @@ const { response } = require("express");
 const mysql = require("mysql2/promise");
 
 const config = {
-  host: "156.67.216.68",
+  host: "85.31.232.218",
   user: "root",
-  password: "propensi-pacil123#",
+  password: "bnicustody",
   database: "master",
   waitForConnections: true,
 };
