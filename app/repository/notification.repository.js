@@ -2,7 +2,7 @@ const db = require("../../core/database");
 
 const NotificationRepository = {
   getAllNotifications: async () => {
-    const [rows] = await db.query("SELECT * FROM notification");
+    const [rows] = await db.query("SELECT * FROM notification ORDER BY created_at DESC");
     return rows;
   },
 
