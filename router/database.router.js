@@ -15,6 +15,9 @@ router.get('/', wrap(databaseController.getAllCustomers));
 router.put("/approval/:id", wrap(databaseController.updateCustomerApproval))
 router.get("/approval/", wrap(databaseController.listCustomerToApprove))
 
+// Related to tracker
+router.get("/tracker", wrap(databaseController.trackFile))
+
 router.get("/checklist", wrap(databaseController.checklist))
 router.get("/:id", wrap(databaseController.getDetailCustomer));
 router.put("/:id", wrap(databaseController.updateCustomer))

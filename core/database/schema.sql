@@ -92,7 +92,8 @@ CREATE TABLE `notification` (
   `name_person` varchar(255),
   `created_at` timestamp,
   `message` text,
-  `is_read` int DEFAULT 0
+  `is_read` int DEFAULT 0,
+  `read_by` varchar(255) DEFAULT ""
 );
 
 CREATE TABLE `announcement` (
@@ -151,6 +152,21 @@ CREATE TABLE `securities_account` (
   `email` varchar(255),
   `created_at` datetime,
   `updated_at` datetime DEFAULT null
+);
+
+CREATE TABLE `asset` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `month` int,
+  `year` int,
+  `total` int
+);
+
+CREATE TABLE `asset_item` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id_asset` int,
+  `name` varchar(255),
+  `auc` int,
+  `type` varchar(255) DEFAULT ""
 );
 
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `user` (`id`);

@@ -22,8 +22,8 @@ const NotificationRepository = {
     return notification;
   },
 
-  updateNotificationReadStatus: async (id) => {
-    await db.query("UPDATE notification SET is_read = 1 WHERE id = ?", [id]);
+  updateNotificationReadStatus: async (id, name) => {
+    await db.query("UPDATE notification SET is_read = 1, read_by = ?  WHERE id = ?", [name, id]);
   },
 
   deleteNotification: async (id) => {

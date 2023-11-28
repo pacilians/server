@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const notificationController = require('../app/controller/notification.controller');
+const authJwt = require('../core/middleware/authjwt');
+const { wrap } = require("../core/error/error-handler");
 
-router.post('/', notificationController.createNotification);
-router.get('/', notificationController.getAllNotifications);
-router.get("/routine", notificationController.checkRoutine)
-router.get('/:id', notificationController.getNotificationById);
-router.put('/:id/mark-read', notificationController.markNotificationAsRead);
-router.delete('/:id', notificationController.deleteNotification);
+router.use(authJwt);
+
+router.post('/', wrap(notificationController.createNotification));
+router.get('/', wrap(notificationController.getAllNotifications));
+router.get("/routine", wrap(notificationController.checkRoutine))
+router.get('/:id', wrap(notificationController.getNotificationById));
+router.put('/:id/mark-read', wrap(notificationController.markNotificationAsRead));
+router.delete('/:id', wrap(notificationController.deleteNotification));
 
 module.exports = router;

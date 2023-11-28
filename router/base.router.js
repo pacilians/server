@@ -31,6 +31,7 @@ router.post(
         id: user.id,
         email: user.email,
         name: user.name,
+        id_customer: user.id_customer
       },
       SECRET_KEY,
       {

@@ -16,8 +16,8 @@ const NotificationService = {
     return createdNotification;
   },
 
-  async markNotificationAsRead(id) {
-    await notificationRepository.updateNotificationReadStatus(id);
+  async markNotificationAsRead(id,name) {
+    await notificationRepository.updateNotificationReadStatus(id, name);
   },
 
   async deleteNotification(id) {

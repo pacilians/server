@@ -293,7 +293,20 @@ const DatabaseController = {
       "All customers who need approval have been retrieved"
     );
     response.send(res);
+  }, 
+
+  // For tracker
+  async trackFile(req, res){
+    const user = req.user
+    const result = await databaseService.trackFile(user.id, user.id_customer)
+    const response = new JsonResponse(
+      200,
+      { track: result },
+      ""
+    );
+    response.send(res);
   }
+
 };
 
 module.exports = DatabaseController;

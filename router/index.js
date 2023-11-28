@@ -9,6 +9,7 @@ const databaseRouter = require("./database.router")
 const auditRouter = require("./audit.router")
 const securityAccount = require("./security-account.router")
 const notification = require("./notification.router")
+const asset = require("./asset.router")
 
 router.use("/", baseRouter);
 router.use("/user", userRouter);
@@ -18,5 +19,6 @@ router.use("/database",databaseRouter)
 router.use("/audit",auditRouter)
 router.use("/security-account",securityAccount)
 router.use("/notification", notification)
+router.use("/asset", asset)
 
 module.exports = router;

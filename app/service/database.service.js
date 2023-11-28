@@ -1,5 +1,5 @@
-const { databaseRepository, masterDataRepository } = require("../repository");
-const masterDataService = require("./master-data.service")
+const { databaseRepository, masterDataRepository, userRepository } = require("../repository");
+const masterDataService = require("./master-data.service");
 const {
   Customer,
   BoardOfDirector,
@@ -94,7 +94,7 @@ const DatabaseService = {
     });
     customer.bank_account = banks;
     customer.board_of_director = bods;
-    customer.file = all;  
+    customer.file = all;
     customer.mandatory_file = mandatory;
     customer.additional_file = additional;
 
@@ -158,7 +158,7 @@ const DatabaseService = {
       let customer = list_customer[i];
       let addedCustomer = new Customer();
       addedCustomer.spread(customer);
-      
+
       let banks = await databaseRepository.getBankAccountByCustomerId(
         customer.id
       );
@@ -270,64 +270,94 @@ const DatabaseService = {
     return files;
   },
 
-  async checklist(){
-    let response = {}
-    let customer = await this.getAllCustomers()
-    let mandatoryFile = await masterDataService.getAllMandatory()
+  async checklist() {
+    let response = {};
+    let customer = await this.getAllCustomers();
+    let mandatoryFile = await masterDataService.getAllMandatory();
 
-    // response.column = 
+    // response.column =
 
     // Getting Columns
-    let col = []
-    for(let i = 0; i < mandatoryFile.length; i ++){
-      col.push(mandatoryFile[i].name)
+    let col = [];
+    for (let i = 0; i < mandatoryFile.length; i++) {
+      col.push(mandatoryFile[i].name);
     }
     response.column = col;
-    response.checklist = []
-
+    response.checklist = [];
 
     // Checking to each files of customer
-    for(let i = 0; i < customer.length; i ++){
-      const cust = customer[i]
-      const files = await this.getCustomerFileByCustomerId(cust.id)
+    for (let i = 0; i < customer.length; i++) {
+      const cust = customer[i];
+      const files = await this.getCustomerFileByCustomerId(cust.id);
 
-      let check = {}
+      let check = {};
 
-      for (let index = 0; index < mandatoryFile.length; index ++){
-        check[mandatoryFile[index].name] = 0
+      for (let index = 0; index < mandatoryFile.length; index++) {
+        check[mandatoryFile[index].name] = 0;
       }
 
-      for(let index = 0; index < files.length; index ++){
-        if(check.hasOwnProperty(files[index].name)){
-          if(files[index].file !== null)
-            check[files[index].name] = 1
+      for (let index = 0; index < files.length; index++) {
+        if (check.hasOwnProperty(files[index].name)) {
+          if (files[index].file !== null) check[files[index].name] = 1;
         }
       }
 
-      let cur = response.checklist
+      let cur = response.checklist;
       cur.push({
         id: customer[i].id,
         name: customer[i].name,
-        check : check
-      })
+        check: check,
+      });
       response.checklist = cur;
     }
-    return response
+    return response;
+  },
+
+  async trackFile(id_user, id_customer) {
+    let response = {};
+    let files = await databaseRepository.getCustomerFileByCustomerId(id_customer);
+
+    let mandatory = [];
+    let additional = [];
+    let mandatory_status = 1;
+
+    files.forEach((item) => {
+      let cur = item;
+      cur.file = undefined;
+      cur.file_exist = 1;
+      if (item.type === "MANDATORY") {
+        if (!item.file) {
+          cur.file_exist = 0;
+          mandatory_status = 0;
+        }
+        mandatory.push(cur);
+      } else {
+        additional.push(cur);
+      }
+    });
+
+    const user = await userRepository.getUserById(id_user)
+
+    response.mandatory = mandatory;
+    response.additional = additional;
+    response.mandatory_status = mandatory_status;
+    response.user = user;
+
+    return response;
   },
 
   /**
    * Nasabah Approval
    */
-  async changeStatusCustomer(id_customer, status){
+  async changeStatusCustomer(id_customer, status) {
     return databaseRepository.changeStatusNasabah(id_customer, status);
   },
-  async updateCommentCustomer(id_customer, comment){
+  async updateCommentCustomer(id_customer, comment) {
     return databaseRepository.updateCommentCustomer(id_customer, comment);
   },
-  async listCommentCustomer(id_customer){
-    return databaseRepository.getApprovalCommentByNasabahId(id_customer)
-  }
-
+  async listCommentCustomer(id_customer) {
+    return databaseRepository.getApprovalCommentByNasabahId(id_customer);
+  },
 };
 
 module.exports = DatabaseService;

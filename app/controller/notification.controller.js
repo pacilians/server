@@ -40,7 +40,8 @@ const NotificationController = {
 
   async markNotificationAsRead(req, res) {
     const id = req.params.id;
-    await notificationService.markNotificationAsRead(id);
+    const user = req.user
+    await notificationService.markNotificationAsRead(id, user.name);
     const response = new JsonResponse(200, {},   "Notification marked as read");
     response.send(res);
   },
