@@ -337,11 +337,15 @@ const DatabaseService = {
     });
 
     const user = await userRepository.getUserById(id_user)
+    let detail_customer = await this.getCustomerById(id_customer)
+    detail_customer.mandatory_file = undefined
+    detail_customer.additional_file = undefined
 
     response.mandatory = mandatory;
     response.additional = additional;
     response.mandatory_status = mandatory_status;
     response.user = user;
+    response.detail = detail_customer
 
     return response;
   },
