@@ -138,7 +138,7 @@ CREATE TABLE `securities_account` (
   `no_paspor` varchar(255),
   `no_pendaftaran_usaha` varchar(255),
   `tanggal_pendirian` datetime,
-  `tempat_penidiran` varchar(255),
+  `tempat_pendirian` varchar(255),
   `tipe_investor` varchar(255),
   `jenis_kelamin` varchar(255),
   `jenis_pekerjaan` varchar(255),

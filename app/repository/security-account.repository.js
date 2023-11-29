@@ -5,7 +5,7 @@ module.exports = {
     const now = new Date()
     console.log(securitiesAccount)
     const [result] = await db.query(
-      "INSERT INTO securities_account (id_customer, kode_bk, no_rekening_investor, nama_perusahaan, nama_awal, nama_tengah, nama_belakang, ktp, npwp, no_paspor, no_pendaftaran_usaha, tanggal_pendirian, tempat_pendirian, tipe_investor, jenis_kelamin, jenis_pekerjaan, alamat_identitas_1, alamat_identitas_2, kode_kota, kode_provinsi, kode_negara, no_telepon, no_hp, email, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO securities_account (id_customer, kode_bk, no_rekening_investor, nama_perusahaan, nama_awal, nama_tengah, nama_belakang, ktp, npwp, no_paspor, no_pendaftaran_usaha, tanggal_pendirian, tempat_pendirian, tipe_investor, jenis_kelamin, jenis_pekerjaan, alamat_identitas_1, alamat_identitas_2, kode_kota, kode_provinsi, kode_negara, no_telepon, no_hp, email, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         securitiesAccount.id_customer,
         securitiesAccount.kode_bk,
