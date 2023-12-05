@@ -54,20 +54,28 @@ module.exports = {
     return rows;
   },
 
-  updateSecuritiesAccount: async (securitiesAccount) => {
-    const { id, ...rest } = securitiesAccount;
+  updateSecuritiesAccount: async (id, securitiesAccount) => {
+    const { ...rest } = securitiesAccount;
     const keys = Object.keys(rest);
     const values = keys.map((key) => rest[key]);
+    let valuesIn = []
+    let updateFields = []
 
-    const updateFields = keys.map((key) => `${key} = ?`).join(", ");
-    values.push(id);
-
+    keys.forEach((key)=>{
+      if(rest[key]){
+        updateFields.push(`${key} = ?`)
+        valuesIn.push(rest[key])
+      }else{
+        // Continue
+      }
+    })
+    updateFields = updateFields.join(", ");
+    valuesIn.push(id)
     const [result] = await db.query(
       `UPDATE securities_account SET ${updateFields} WHERE id = ?`,
-      values
+      valuesIn
     );
-
-    return result.affectedRows > 0;
+    return 1;
   },
 
   deleteSecuritiesAccount: async (id) => {

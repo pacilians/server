@@ -29,7 +29,10 @@ const SecuritiesAccountController = {
   
   async updateSecuritiesAccount(req, res) {
     const id = req.params.id;
-    const securitiesAccount = plainToClass(SecuritiesAccount, req.body);
+    let securitiesAccount = plainToClass(SecuritiesAccount, req.body);
+    securitiesAccount.created_at = null
+    securitiesAccount.id = null
+    securitiesAccount.updated_at = new Date()
     const updated = await securitiesAccountService.updateSecuritiesAccount(id, securitiesAccount);
 
     const response = new JsonResponse(
