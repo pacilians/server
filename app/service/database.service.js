@@ -82,7 +82,7 @@ const DatabaseService = {
     let additional = [];
     let all = files.forEach((ctx) => {
       let exist = 0
-      if(ctx.data){
+      if(ctx.file){
         exist = 1
       }
       let add = {
