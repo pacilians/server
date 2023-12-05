@@ -271,7 +271,8 @@ const DatabaseRepository = {
   },
 
   async deleteCustomerFile(fileId) {
-    await db.query("DELETE FROM customer_file WHERE id = ?", [fileId]);
+    console.log(fileId);
+    await db.query("UPDATE customer_file SET file = NULL WHERE id = ?", [fileId]);
   },
 
   async getAllCustomerFiles() {

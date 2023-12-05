@@ -1,4 +1,8 @@
-const { databaseRepository, masterDataRepository, userRepository } = require("../repository");
+const {
+  databaseRepository,
+  masterDataRepository,
+  userRepository,
+} = require("../repository");
 const masterDataService = require("./master-data.service");
 const {
   Customer,
@@ -77,11 +81,16 @@ const DatabaseService = {
     let mandatory = [];
     let additional = [];
     let all = files.forEach((ctx) => {
+      let exist = 0
+      if(ctx.data){
+        exist = 1
+      }
       let add = {
         id: ctx.id,
         id_customer: ctx.id_customer,
         name: ctx.name,
         type: ctx.type,
+        exist: exist,
         created_at: ctx.created_at,
         updated_at: ctx.updated_at,
       };
@@ -315,7 +324,9 @@ const DatabaseService = {
 
   async trackFile(id_user, id_customer) {
     let response = {};
-    let files = await databaseRepository.getCustomerFileByCustomerId(id_customer);
+    let files = await databaseRepository.getCustomerFileByCustomerId(
+      id_customer
+    );
 
     let mandatory = [];
     let additional = [];
@@ -336,16 +347,16 @@ const DatabaseService = {
       }
     });
 
-    const user = await userRepository.getUserById(id_user)
-    let detail_customer = await this.getCustomerById(id_customer)
-    detail_customer.mandatory_file = undefined
-    detail_customer.additional_file = undefined
+    const user = await userRepository.getUserById(id_user);
+    let detail_customer = await this.getCustomerById(id_customer);
+    detail_customer.mandatory_file = undefined;
+    detail_customer.additional_file = undefined;
 
     response.mandatory = mandatory;
     response.additional = additional;
     response.mandatory_status = mandatory_status;
     response.user = user;
-    response.detail = detail_customer
+    response.detail = detail_customer;
 
     return response;
   },

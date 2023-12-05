@@ -220,7 +220,7 @@ const DatabaseController = {
   },
 
   async deleteCustomerFile(req, res) {
-    const id = req.params.file;
+    const id = req.params.fileId;
     await databaseService.deleteCustomerFile(id);
     const response = new JsonResponse(
       200,
