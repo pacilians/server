@@ -19,6 +19,9 @@ const MasterDataRepository = {
     deleteMandatory: async(id)=>{
         return await db.query('DELETE FROM category_mandatory WHERE id = ?', [id]);
     },
+    updateMandatory: async(id, name)=>{
+        return await db.query('UPDATE category_mandatory SET name = ? WHERE id = ?', [name, id]);
+    },
 
 
 

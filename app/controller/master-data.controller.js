@@ -98,6 +98,23 @@ const MasterDataController = {
     response.send(res);
   },
 
+  async updateMandatory(req, res){
+    const { name } = req.body
+    const id = req.params.id
+    const update = await masterDataService.updateMandatory(id, name);
+    const response = new JsonResponse(
+      200,
+      { },
+      "Success update mandatory"
+    );
+
+    if (!update) {
+      response.message = "Failed update mandatory category";
+      response.status = 500;
+    }
+    response.send(res);
+  },
+
   async deleteMandatory(req, res) {
     const id = req.params.id;
     await masterDataService.deleteMandatory(id)

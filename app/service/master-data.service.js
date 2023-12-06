@@ -25,6 +25,9 @@ const MasterDataService = {
   async createMandatory(name) {
     return await masterDataRepository.createMandatory(name);
   },
+  async updateMandatory(id, name){
+    return await masterDataRepository.updateMandatory(id, name);
+  },
   async deleteMandatory(id) {
     return await masterDataRepository.deleteMandatory(id);
   },

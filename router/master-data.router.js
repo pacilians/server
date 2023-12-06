@@ -19,6 +19,7 @@ router.delete("/service/:id", wrap(masterDataController.deleteService))
 
 router.post('/mandatory', wrap(masterDataController.createMandatory))
 router.get('/mandatory', wrap(masterDataController.getAllMandatory))
+router.put("/mandatory/:id", wrap(masterDataController.updateMandatory))
 router.delete("/mandatory/:id", wrap(masterDataController.deleteMandatory))
 
 module.exports = router;
